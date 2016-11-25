@@ -9,25 +9,42 @@ int [0-9]+
 string ".*"
 float  {int}|[0-9]*('.'[0-9]|[0-9]'.')[0-9]*
 bool 'true'|'false'
-logical_ops [(==)(<=)(<)(>)(>=)(!=)]
-logical_concat [(&&) (||)]
+logical_ops [\==\<=\<\>\>=\!=]
+logical_concat (\&\&|\|\|)
 logical_not '!'
 primary_ops [+\-*/]
 assign_op '='
-directions [(N)(E)(S)(W)(NE)(SE)(SW)(NW)]
-location Location({int}|{id},{int}|{id})
+directions (N|E|S|W|NE|SE|SW|NW)
+location Location\(({int}|{id}){comma}({int}|{id})\)
 size Size({int}|{id},{int}|{id})
-color Color({int}|{id},{int}|{id},{int}|{id})
+color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 var_decl 'var'
-draw_funct 'Draw'
-oval_shape 'Oval'
-rect_shape 'Rect'
-line_shape 'Line'
-lparan '\('
-rparan '\)'
-comma ','
+draw_funct Draw
+oval_shape Oval
+rect_shape Rect
+line_shape Line
+lparan \(
+rparan \)
+comma ,
+if if
+else else
+while while
+brackcl }
+brackop {
 
 %%
+
+{if} {
+	return IF;
+}
+
+{else} {
+	return ELSE;
+}
+
+{while} {
+	return WHILE;
+}
 
 {id} {
 	yyval.id = strdup(yytext);
@@ -97,7 +114,7 @@ comma ','
 		yyval.directions = 5;
 	else if(strcmp(yytext, "SE") == 0)
 		yyval.directions = 6;
-	else 
+	else
 		yyval.directions = 7;
 
 	return DIRECTION;
