@@ -8,21 +8,24 @@ id [a-z]+[0-9]*
 int [0-9]+
 string ".*"
 float  {int}|[0-9]*('.'[0-9]|[0-9]'.')[0-9]*
-bool true|false
+bool 'true'|'false'
 logical_ops [(==)(<=)(<)(>)(>=)(!=)]
 logical_concat [(&&) (||)]
-logical_not !
+logical_not '!'
 primary_ops [+\-*/]
-assign_op =
+assign_op '='
 directions [(N)(E)(S)(W)(NE)(SE)(SW)(NW)]
 location Location({int}|{id},{int}|{id})
 size Size({int}|{id},{int}|{id})
 color Color({int}|{id},{int}|{id},{int}|{id})
-var_decl var
-draw_funct Draw
-oval_shape Oval
-rect_shape Rect
-line_shape Line
+var_decl 'var'
+draw_funct 'Draw'
+oval_shape 'Oval'
+rect_shape 'Rect'
+line_shape 'Line'
+lparan '('
+rparan ')'
+comma ','
 
 %%
 
@@ -135,15 +138,15 @@ line_shape Line
 	return LINE;
 }
 
-"(" {
+{lparan} {
 	return LPARAN;
 }
 
-")" {
+{rparan} {
 	return RPARAN;
 }
 
-"," {
+{comma} {
 	return COMMA;
 }
 
