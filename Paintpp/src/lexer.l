@@ -12,7 +12,7 @@ bool true|false
 logical_ops [(==)(<=)(<)(>)(>=)(!=)]
 logical_concat [(&&) (||)]
 logical_not !
-primary_ops [+-*/]
+primary_ops [+\-*/]
 assign_op =
 directions [(N)(E)(S)(W)(NE)(SE)(SW)(NW)]
 location Location({int}|{id},{int}|{id})
@@ -70,7 +70,7 @@ line_shape Line
 }
 
 {primary_ops} {
-	yyval.primary_ops = *yytext;
+	yyval.primary = *yytext;
 	return PRIMARY_OPS;
 }
 
@@ -135,16 +135,20 @@ line_shape Line
 	return LINE;
 }
 
-( {
+"(" {
 	return LPARAN;
 }
 
-) {
+")" {
 	return RPARAN;
 }
 
-, {
+"," {
 	return COMMA;
 }
 
 %%
+int main(){
+	yylex();
+	return 0;
+}
