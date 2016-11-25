@@ -23,8 +23,8 @@ draw_funct 'Draw'
 oval_shape 'Oval'
 rect_shape 'Rect'
 line_shape 'Line'
-lparan '('
-rparan ')'
+lparan '\('
+rparan '\)'
 comma ','
 
 %%
