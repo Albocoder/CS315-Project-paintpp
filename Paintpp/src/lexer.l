@@ -6,12 +6,7 @@ void yyerror(char *);
 
 
 %%
-
+//dfed
 
 
 %%
-
-int main(){
-	yylex();
-	return 0;
-}
