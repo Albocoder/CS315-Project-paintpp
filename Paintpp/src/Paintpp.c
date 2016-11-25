@@ -2,8 +2,8 @@
  ============================================================================
  Name        : Paintpp.c
  Author      : Gulsum Gudukbay & Melis Kizildemir & Erin Avllazagaj
- Version     :
- Copyright   : 
+ Version     : 1.0
+ Copyright   : Ours and only ours...
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
