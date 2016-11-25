@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//gdgnf
+
 
 int main(){
 	yylex();
