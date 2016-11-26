@@ -4,7 +4,7 @@
 void yyerror(char *);
 %}
 
-id [a-z]+[0-9]*
+id [a-z_]+[0-9]*
 int [0-9]+
 string ".*"
 float  {int}|[0-9]*('.'[0-9]|[0-9]'.')[0-9]*
@@ -18,6 +18,7 @@ directions (N|E|S|W|NE|SE|SW|NW)
 location Location\(({int}|{id}){comma}({int}|{id})\)
 size Size({int}|{id},{int}|{id})
 color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
+bounding BoundingRectangle\(({int}|{id}){comma}({int}|{id})\)
 var_decl 'var'
 draw_funct Draw
 oval_shape Oval
@@ -133,6 +134,11 @@ brackop {
 {color} {
 	yytext.color = *yytext;
 	return COLOR;
+}
+
+{bounding} {
+	yytext.bounding = *yytext;
+	return BOUNDING;
 }
 
 {var_decl} {
