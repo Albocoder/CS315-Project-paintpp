@@ -2,10 +2,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+using namespace std;
 void yyerror(char *);
 %}
 
-id [a-zA-Z][a-zA-Z_0-9]*
+id [a-zA-Z][a-zA-Z0-9_]*
 int [0-9]+
 string ".*"
 float  [0-9]*('.'[0-9]|[0-9]'.'[0-9])[0-9]*
@@ -50,15 +51,15 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 %%
 \/\/[^\n]* ;
 {colorconstructor} {
-	yytext+(yytext.find(')')) = \0;
 	string toReturn = strdup(yytext+10);
+	toReturn+(toReturn.find(")")) = \0;
 	int tmp = toReturn.find(',');
 	yyval.arg1 = toReturn.substr(0,tmp);
 	toReturn = toReturn+tmp+1;
 	tmp = toReturn.find(',');
 	yyval.arg2 = toReturn.substr(0,tmp);
 	toReturn = toReturn+tmp+1;
-	yyval.arg3 = toReturn
+	yyval.arg3 = toReturn;
 	return COLOR_CONSTRUCTOR;
 }
 {blackcolor} {

@@ -669,8 +669,9 @@ char *yytext;
 #include <iostream>
 #include <cstdlib>
 #include <string>
+using namespace std;
 void yyerror(char *);
-#line 674 "lex.yy.c"
+#line 675 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -888,9 +889,9 @@ YY_DECL
 		}
 
 	{
-#line 50 "lexer.l"
+#line 51 "lexer.l"
 
-#line 894 "lex.yy.c"
+#line 895 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -949,91 +950,91 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 52 "lexer.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 52 "lexer.l"
+#line 53 "lexer.l"
 {
-	yytext+(yytext.find(')')) = \0;
 	string toReturn = strdup(yytext+10);
+	toReturn+(toReturn.find(")")) = \0;
 	int tmp = toReturn.find(',');
 	yyval.arg1 = toReturn.substr(0,tmp);
 	toReturn = toReturn+tmp+1;
 	tmp = toReturn.find(',');
 	yyval.arg2 = toReturn.substr(0,tmp);
 	toReturn = toReturn+tmp+1;
-	yyval.arg3 = toReturn
+	yyval.arg3 = toReturn;
 	return COLOR_CONSTRUCTOR;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 64 "lexer.l"
+#line 65 "lexer.l"
 {
 	return BLACK_COLOR;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 67 "lexer.l"
+#line 68 "lexer.l"
 {
 	return CYAN_COLOR;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 70 "lexer.l"
+#line 71 "lexer.l"
 {
 	return GREEN_COLOR;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 74 "lexer.l"
 {
 	return ORANGE_COLOR;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 77 "lexer.l"
 {
 	return PURPLE_COLOR;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 79 "lexer.l"
+#line 80 "lexer.l"
 {
 	return BLUE_COLOR;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 82 "lexer.l"
+#line 83 "lexer.l"
 {
 	return YELLOW_COLOR;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 85 "lexer.l"
+#line 86 "lexer.l"
 {
 	return WHITE_COLOR;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 88 "lexer.l"
+#line 89 "lexer.l"
 {
 	return RED_COLOR;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 91 "lexer.l"
+#line 92 "lexer.l"
 {
 	yytext+(yytext.find(')')) = \0;
 	yyval.value = strdup(yytext+4);
@@ -1042,7 +1043,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 96 "lexer.l"
+#line 97 "lexer.l"
 {
 	yytext+(yytext.find(')')) = \0;
 	yyval.value = strdup(yytext+3);
@@ -1051,7 +1052,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "lexer.l"
+#line 102 "lexer.l"
 {
 	yytext+(yytext.find(')')) = \0;
 	yyval.value = strdup(yytext+5);
@@ -1060,7 +1061,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 106 "lexer.l"
+#line 107 "lexer.l"
 {
 	yytext+(yytext.find(')')) = \0;
 	yyval.value = strdup(yytext+3);
@@ -1069,28 +1070,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 112 "lexer.l"
+#line 113 "lexer.l"
 {
 	return IF;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 116 "lexer.l"
+#line 117 "lexer.l"
 {
 	return ELSE;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 120 "lexer.l"
+#line 121 "lexer.l"
 {
 	return WHILE;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 124 "lexer.l"
+#line 125 "lexer.l"
 {
 	yyval.id = strdup(yytext);
 	return ID;
@@ -1098,7 +1099,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 129 "lexer.l"
+#line 130 "lexer.l"
 {
 	yyval.int = atoi(yytext);
 	return INT;
@@ -1106,7 +1107,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 134 "lexer.l"
+#line 135 "lexer.l"
 {
 	yyval.string = strdup(yytext);
 	return STRING;
@@ -1114,7 +1115,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 139 "lexer.l"
+#line 140 "lexer.l"
 {
 	yyval.float = atof(yytext);
 	return FLOAT;
@@ -1122,7 +1123,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 144 "lexer.l"
+#line 145 "lexer.l"
 {
 	if(strcmp(yytext, "True") == 0)
 		yyval.bool = 1;
@@ -1133,7 +1134,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 152 "lexer.l"
+#line 153 "lexer.l"
 {
 	yyval.logical_ops = *yytext;
 	return LOGICAL_OPS;
@@ -1141,7 +1142,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 157 "lexer.l"
+#line 158 "lexer.l"
 {
 	yyval.logical_concat = *yytext;
 	return LOGICAL_CONCAT;
@@ -1149,7 +1150,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 162 "lexer.l"
+#line 163 "lexer.l"
 {
 	yyval.logical_not = *yytext;
 	return LOGICAL_NOT;
@@ -1157,7 +1158,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 167 "lexer.l"
+#line 168 "lexer.l"
 {
 	yyval.primary = *yytext;
 	return PRIMARY_OPS;
@@ -1165,7 +1166,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 172 "lexer.l"
+#line 173 "lexer.l"
 {
 	yyval.assign_op = *yytext;
 	return ASSIGN_OP;
@@ -1173,7 +1174,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 177 "lexer.l"
+#line 178 "lexer.l"
 {
 	if(strcmp(yytext, "N")  == 0)
 		yyval.directions = 0;
@@ -1197,7 +1198,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 198 "lexer.l"
+#line 199 "lexer.l"
 {
 	yyval.location = *yytext;
 	return LOCATION;
@@ -1205,7 +1206,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 203 "lexer.l"
+#line 204 "lexer.l"
 {
 	yyval.size = *yytext;
 	return SIZE;
@@ -1213,7 +1214,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 208 "lexer.l"
+#line 209 "lexer.l"
 {
 	yytext.color = *yytext;
 	return COLOR;
@@ -1221,7 +1222,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 213 "lexer.l"
+#line 214 "lexer.l"
 {
 	yytext.bounding = *yytext;
 	return BOUNDING;
@@ -1229,73 +1230,73 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 218 "lexer.l"
+#line 219 "lexer.l"
 {
 	return VAR;
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 222 "lexer.l"
+#line 223 "lexer.l"
 {
 	return DRAW;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 226 "lexer.l"
+#line 227 "lexer.l"
 {
 	return OVAL;
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 230 "lexer.l"
+#line 231 "lexer.l"
 {
 	return RECT;
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 234 "lexer.l"
+#line 235 "lexer.l"
 {
 	return LINE;
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 238 "lexer.l"
+#line 239 "lexer.l"
 {
 	return LPARAN;
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 242 "lexer.l"
+#line 243 "lexer.l"
 {
 	return RPARAN;
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 246 "lexer.l"
+#line 247 "lexer.l"
 {
 	return COMMA;
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 249 "lexer.l"
+#line 250 "lexer.l"
 {
 	return ERROR_CHAR;
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 252 "lexer.l"
+#line 253 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1299 "lex.yy.c"
+#line 1300 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2296,7 +2297,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 252 "lexer.l"
+#line 253 "lexer.l"
 
 
 int main(){
