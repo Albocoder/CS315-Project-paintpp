@@ -1,20 +1,21 @@
 %{
 #include <iostream>
 #include <cstdlib>
+#include <string>
 void yyerror(char *);
 %}
 
 id [a-zA-Z][a-zA-Z_0-9]*
 int [0-9]+
 string ".*"
-float  {int}|[0-9]*('.'[0-9]|[0-9]'.')[0-9]*
+float  [0-9]*('.'[0-9]|[0-9]'.'[0-9])[0-9]*
 bool 'True'|'False'
 logical_ops [\==\<=\<\>\>=\!=]
-logical_concat (\&\&|\|\|)
+logical_concat (&&|\|\|)
 logical_not '!'
 primary_ops [+\-*/]
 assign_op '='
-directions [N|E|S|W|NE|SE|SW|NW]
+directions 'N'|'E'|'S'|'W'|'NE'|'SE'|'SW'|'NW'
 location Location\(({int}|{id}){comma}({int}|{id})\)
 size Size({int}|{id},{int}|{id})
 color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
@@ -27,13 +28,86 @@ line_shape 'Line'
 lparan \(
 rparan \)
 comma ,
-if if
-else else
-while while
-brackcl }
-brackop {
-
+if 'if'
+else 'else'
+while 'while'
+brackcl '}'
+brackop '{'
+str_funct str\({int}|{float}|{bool}|{id}\)
+float_funct float\({int}|{bool}|{string}|{id}\)
+int_funct int\({float}|{bool}|{string}|{id}\)
+bool_funct bool\({string}|{int}|{float}|{id}\)
+redcolor Color'.'RED
+blackcolor Color'.'BLACK
+cyancolor Color'.'CYAN
+greencolor Color'.'GREEN
+orangecolor Color'.'ORANGE
+purplecolor Color'.'PURPLE
+bluecolor Color'.'BLUE
+yellowcolor Color'.'YELLOW
+whitecolor Color'.'WHITE
+colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
+\/\/[^\n]* ;
+{colorconstructor} {
+	yytext+(yytext.find(')')) = \0;
+	string toReturn = strdup(yytext+10);
+	int tmp = toReturn.find(',');
+	yyval.arg1 = toReturn.substr(0,tmp);
+	toReturn = toReturn+tmp+1;
+	tmp = toReturn.find(',');
+	yyval.arg2 = toReturn.substr(0,tmp);
+	toReturn = toReturn+tmp+1;
+	yyval.arg3 = toReturn
+	return COLOR_CONSTRUCTOR;
+}
+{blackcolor} {
+	return BLACK_COLOR;
+}
+{cyancolor} {
+	return CYAN_COLOR;
+}
+{greencolor} {
+	return GREEN_COLOR;
+}
+{orangecolor} {
+	return ORANGE_COLOR;
+}
+{purplecolor} {
+	return PURPLE_COLOR;
+}
+{bluecolor} {
+	return BLUE_COLOR;
+}
+{yellowcolor} {
+	return YELLOW_COLOR;
+}
+{whitecolor} {
+	return WHITE_COLOR;
+}
+{redcolor} {
+	return RED_COLOR;
+}
+{bool_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return BOOL_FUNCT;
+}
+{str_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return STR_FUNCT;
+}
+{float_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return FLOAT_FUNCT;
+}
+{int_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return INT_FUNCT;
+}
 
 {if} {
 	return IF;
@@ -68,7 +142,7 @@ brackop {
 }
 
 {bool} {
-	if(strcmp(yytext, "true") == 0)
+	if(strcmp(yytext, "True") == 0)
 		yyval.bool = 1;
 	else
 		yyval.bool = 0;
@@ -172,7 +246,9 @@ brackop {
 {comma} {
 	return COMMA;
 }
-
+. {
+	return ERROR_CHAR;
+}
 %%
 int main(){
 	yylex();
