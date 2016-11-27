@@ -90,7 +90,7 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 }
 {bool_funct} {
 	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+3);
+	yyval.value = strdup(yytext+4);
 	return BOOL_FUNCT;
 }
 {str_funct} {
@@ -100,7 +100,7 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 }
 {float_funct} {
 	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+3);
+	yyval.value = strdup(yytext+5);
 	return FLOAT_FUNCT;
 }
 {int_funct} {
