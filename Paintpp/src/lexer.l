@@ -28,7 +28,7 @@ rect_shape 'Rect'
 line_shape 'Line'
 lparan \(
 rparan \)
-comma ,
+comma \,
 if 'if'
 else 'else'
 while 'while'
