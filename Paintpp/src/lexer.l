@@ -8,7 +8,7 @@ void yyerror(char *);
 
 id [a-zA-Z][a-zA-Z0-9_]*
 int [0-9]+
-string ".*"
+string "[ˆ\n\"]*"
 float  [0-9]*('.'[0-9]|[0-9]'.'[0-9])[0-9]*
 bool 'True'|'False'
 logical_ops [\==\<=\<\>\>=\!=]
