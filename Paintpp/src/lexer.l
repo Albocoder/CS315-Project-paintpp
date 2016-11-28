@@ -18,7 +18,7 @@ primary_ops [+\-*/]
 assign_op '='
 directions 'N'|'E'|'S'|'W'|'NE'|'SE'|'SW'|'NW'
 location Location\(({int}|{id}){comma}({int}|{id})\)
-size Size({int}|{id},{int}|{id})
+size Size\({int}|{id},{int}|{id}\)
 color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 bounding BoundingRectangle\(({int}|{id}){comma}({int}|{id})\)
 var_decl 'var'
@@ -34,10 +34,10 @@ else 'else'
 while 'while'
 brackcl '}'
 brackop '{'
-str_funct str\({int}|{float}|{bool}|{id}\)
-float_funct float\({int}|{bool}|{string}|{id}\)
-int_funct int\({float}|{bool}|{string}|{id}\)
-bool_funct bool\({string}|{int}|{float}|{id}\)
+str_funct str\(({int}|{float}|{bool}|{id})\)
+float_funct float\(({int}|{bool}|{string}|{id})\)
+int_funct int\(({float}|{bool}|{string})\)
+bool_funct bool\(({string}|{int}|{float}|{id})\)
 redcolor Color'.'RED
 blackcolor Color'.'BLACK
 cyancolor Color'.'CYAN
@@ -50,6 +50,7 @@ whitecolor Color'.'WHITE
 colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
 \/\/[^\n]* ;
+
 {colorconstructor} {
 	string toReturn = strdup(yytext+10);
 	toReturn+(toReturn.find(")")) = \0;
@@ -126,6 +127,7 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 	yyval.id = strdup(yytext);
 	return ID;
 }
+
 
 {int} {
 	yyval.integer = atoi(yytext);
