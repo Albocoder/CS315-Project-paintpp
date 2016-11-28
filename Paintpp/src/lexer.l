@@ -2,38 +2,42 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 void yyerror(char *);
 %}
 
 id [a-zA-Z][a-zA-Z0-9_]*
 int [0-9]+
-string ".*"
-float  [0-9]*('.'[0-9]|[0-9]'.'[0-9])[0-9]*
-bool 'True'|'False'
-logical_ops [\==\<=\<\>\>=\!=]
+string \"([^\"\\\n]|\\\"|\\n|\\t|\\\\)*\"
+float [0-9]*\.[0-9]+
+bool TRUE|FALSE
+arraytype {id}\[({int}|{id})\]
+logical_ops ((==)|(<=)|(<)|(>)|(>=)|(!=))
 logical_concat (&&|\|\|)
-logical_not '!'
+logical_not \!
 primary_ops [+\-*/]
-assign_op '='
+assign_op \=
 directions 'N'|'E'|'S'|'W'|'NE'|'SE'|'SW'|'NW'
 location Location\(({int}|{id}){comma}({int}|{id})\)
-size Size\({int}|{id},{int}|{id}\)
+size Size\(({int}|{id}){comma}({int}|{id})\)
 color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 bounding BoundingRectangle\(({int}|{id}){comma}({int}|{id})\)
-var_decl 'var'
-draw_funct 'Draw'
-oval_shape 'Oval'
-rect_shape 'Rect'
-line_shape 'Line'
+var_decl var
+draw_funct Draw\(({id}{comma}{id}({comma}{id})?({comma}{id})?({comma}{id})?)\)
+oval_shape Oval\(\)
+rect_shape Rect\(({int}|{bool})\)
+line_shape Line\(({directions}{comma}({id}|{int}){comma}({id}|{int}))\)
+comp_funct Composite\({id}\)
 lparan \(
 rparan \)
 comma ,
-if 'if'
-else 'else'
-while 'while'
-brackcl '}'
-brackop '{'
+if if
+else else
+while while
+brackcl \}
+brackop \{
 str_funct str\(({int}|{float}|{bool}|{id})\)
 float_funct float\(({int}|{bool}|{string}|{id})\)
 int_funct int\(({float}|{bool}|{string})\)
@@ -49,211 +53,179 @@ yellowcolor Color'.'YELLOW
 whitecolor Color'.'WHITE
 colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
-\/\/[^\n]* ;
+\/\/[^\n]* printf("comment here");
+[ \t\r]+ ;
 
+{var_decl} {
+	printf("VAR ");
+}
+{comp_funct} {
+	printf("%s ", "compositeFunction ");
+}
+{arraytype} {
+	printf("arraytype ");
+}
+{brackop} {
+	printf("%s ", "brackop");
+}
+{brackcl} {
+	printf("%s ", "brackcl");
+}
 {colorconstructor} {
-	string toReturn = strdup(yytext+10);
-	toReturn+(toReturn.find(")")) = \0;
-	int tmp = toReturn.find(',');
-	yyval.arg1 = toReturn.substr(0,tmp);
-	toReturn = toReturn+tmp+1;
-	tmp = toReturn.find(',');
-	yyval.arg2 = toReturn.substr(0,tmp);
-	toReturn = toReturn+tmp+1;
-	yyval.arg3 = toReturn;
-	return COLOR_CONSTRUCTOR;
+	printf("%s ", "colorConstr");
 }
 {blackcolor} {
-	return BLACK_COLOR;
+	printf("%s ", "blackcol");
 }
 {cyancolor} {
-	return CYAN_COLOR;
+	printf("%s ", "cyancol");
 }
 {greencolor} {
-	return GREEN_COLOR;
+	printf("%s ", "greencol");
 }
 {orangecolor} {
-	return ORANGE_COLOR;
+	printf("%s ", "orangecol");
 }
 {purplecolor} {
-	return PURPLE_COLOR;
+	printf("%s ", "purpcol");
 }
 {bluecolor} {
-	return BLUE_COLOR;
+	printf("%s ", "blucol");
 }
 {yellowcolor} {
-	return YELLOW_COLOR;
+	printf("%s ", "yellowcol");
 }
 {whitecolor} {
-	return WHITE_COLOR;
+	printf("%s ", "whitecol");
 }
 {redcolor} {
-	return RED_COLOR;
+	printf("%s ", "redcol");
 }
 {bool_funct} {
-	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+4);
-	return BOOL_FUNCT;
+	printf("%s ", "boolconvert");
 }
 {str_funct} {
-	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+3);
-	return STR_FUNCT;
+	printf("%s ", "strconvert");
 }
 {float_funct} {
-	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+5);
-	return FLOAT_FUNCT;
+	printf("%s ", "floatconvert");
 }
 {int_funct} {
-	yytext+(yytext.find(')')) = \0;
-	yyval.value = strdup(yytext+3);
-	return INT_FUNCT;
+	printf("%s ", "intconvert");
 }
 
 {if} {
-	return IF;
+	printf("%s ", "IF");
 }
 
 {else} {
-	return ELSE;
+	printf("%s ", "ELSE");
 }
 
 {while} {
-	return WHILE;
-}
-
-{id} {
-	yyval.id = strdup(yytext);
-	return ID;
-}
-
-
-{int} {
-	yyval.integer = atoi(yytext);
-	return INT;
-}
-
-{string} {
-	yyval.string = strdup(yytext);
-	return STRING;
+	printf("%s ", "WHILE");
 }
 
 {float} {
-	yyval.float = atof(yytext);
-	return FLOAT;
+	printf("%s ", "FLOAT");
 }
 
+{int} {
+	printf("%s ", "INT");
+}
+
+
 {bool} {
-	if(strcmp(yytext, "True") == 0)
-		yyval.bool = 1;
-	else
-		yyval.bool = 0;
-	return BOOL;
+	printf("%s ", "BOOL");
 }
 
 {logical_ops} {
-	yyval.logical_ops = *yytext;
-	return LOGICAL_OPS;
+	printf("%s ", "LOGOP");
 }
 
 {logical_concat} {
-	yyval.logical_concat = *yytext;
-	return LOGICAL_CONCAT;
+	printf("%s ", "LOGCONC");
 }
 
 {logical_not} {
-	yyval.logical_not = *yytext;
-	return LOGICAL_NOT;
+	printf("%s ", "LOGNOT");
 }
 
 {primary_ops} {
-	yyval.primary = *yytext;
-	return PRIMARY_OPS;
+	printf("%s ", "PRIMOP");
 }
 
 {assign_op} {
-	yyval.assign_op = *yytext;
-	return ASSIGN_OP;
+	printf("%s ", "ASSIGN");
 }
 
 {directions} {
-	if(strcmp(yytext, "N")  == 0)
-		yyval.directions = 0;
-	else if(strcmp(yytext, "E") == 0)
-		yyval.directions = 1;
-	else if(strcmp(yytext, "S") == 0)
-		yyval.directions = 2;
-	else if(strcmp(yytext, "W") == 0)
-		yyval.directions = 3;
-	else if(strcmp(yytext, "NE") == 0)
-		yyval.directions = 4;
-	else if(strcmp(yytext, "NW") == 0)
-		yyval.directions = 5;
-	else if(strcmp(yytext, "SE") == 0)
-		yyval.directions = 6;
-	else
-		yyval.directions = 7;
-
-	return DIRECTION;
+	printf("%s ", "DIR");
 }
 
 {location} {
-	yyval.location = *yytext;
-	return LOCATION;
+	printf("%s ", "loc");
 }
 
 {size} {
-	yyval.size = *yytext;
-	return SIZE;
+	printf("%s ", "SZ");
 }
 
 {color} {
-	yytext.color = *yytext;
-	return COLOR;
+	printf("%s ", "COL");
 }
 
 {bounding} {
-	yytext.bounding = *yytext;
-	return BOUNDING;
+	printf("%s ", "BOUNDRECT");
 }
 
-{var_decl} {
-	return VAR;
-}
 
 {draw_funct} {
-	return DRAW;
+	printf("DRAW ");
 }
 
 {oval_shape} {
-	return OVAL;
+	printf("OVAL ");
 }
 
 {rect_shape} {
-	return RECT;
+	printf("RECT ");
 }
 
 {line_shape} {
-	return LINE;
+	printf("LINE ");
 }
 
 {lparan} {
-	return LPARAN;
+	printf("LPAR ");
 }
 
 {rparan} {
-	return RPARAN;
+	printf("RPAR ");
 }
 
 {comma} {
-	return COMMA;
+	printf("comma ");
 }
-. {
-	return ERROR_CHAR;
+{string} {
+	printf("%s ", "STRING ");
+}
+
+{id} {
+	printf("%s ", "ID ");
+}
+. { /* anything else is error */
+  printf("ERROR ");
 }
 %%
-int main(){
-	yylex();
-	return 0;
+int yywrap(void)
+{
+  return 1;
 }
+
+int main()
+{
+  yylex();
+  return 0;
+}
+
