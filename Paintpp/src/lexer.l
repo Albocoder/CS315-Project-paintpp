@@ -28,7 +28,7 @@ rect_shape 'Rect'
 line_shape 'Line'
 lparan \(
 rparan \)
-comma \,
+comma ,
 if 'if'
 else 'else'
 while 'while'
@@ -128,7 +128,7 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 }
 
 {int} {
-	yyval.int = atoi(yytext);
+	yyval.integer = atoi(yytext);
 	return INT;
 }
 
