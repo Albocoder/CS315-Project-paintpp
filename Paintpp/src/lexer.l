@@ -1,33 +1,126 @@
 %{
 #include <iostream>
 #include <cstdlib>
+#include <string>
+using namespace std;
 void yyerror(char *);
 %}
 
-id [a-z]+[0-9]*
+id [a-zA-Z][a-zA-Z0-9_]*
 int [0-9]+
 string ".*"
-float  {int}|[0-9]*('.'[0-9]|[0-9]'.')[0-9]*
-bool 'true'|'false'
-logical_ops [(==)(<=)(<)(>)(>=)(!=)]
-logical_concat [(&&) (||)]
+float  [0-9]*('.'[0-9]|[0-9]'.'[0-9])[0-9]*
+bool 'True'|'False'
+logical_ops [\==\<=\<\>\>=\!=]
+logical_concat (&&|\|\|)
 logical_not '!'
 primary_ops [+\-*/]
 assign_op '='
-directions [(N)(E)(S)(W)(NE)(SE)(SW)(NW)]
-location Location({int}|{id},{int}|{id})
+directions 'N'|'E'|'S'|'W'|'NE'|'SE'|'SW'|'NW'
+location Location\(({int}|{id}){comma}({int}|{id})\)
 size Size({int}|{id},{int}|{id})
-color Color({int}|{id},{int}|{id},{int}|{id})
+color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
+bounding BoundingRectangle\(({int}|{id}){comma}({int}|{id})\)
 var_decl 'var'
 draw_funct 'Draw'
 oval_shape 'Oval'
 rect_shape 'Rect'
 line_shape 'Line'
-lparan '\('
-rparan '\)'
-comma ','
-
+lparan \(
+rparan \)
+comma \,
+if 'if'
+else 'else'
+while 'while'
+brackcl '}'
+brackop '{'
+str_funct str\({int}|{float}|{bool}|{id}\)
+float_funct float\({int}|{bool}|{string}|{id}\)
+int_funct int\({float}|{bool}|{string}|{id}\)
+bool_funct bool\({string}|{int}|{float}|{id}\)
+redcolor Color'.'RED
+blackcolor Color'.'BLACK
+cyancolor Color'.'CYAN
+greencolor Color'.'GREEN
+orangecolor Color'.'ORANGE
+purplecolor Color'.'PURPLE
+bluecolor Color'.'BLUE
+yellowcolor Color'.'YELLOW
+whitecolor Color'.'WHITE
+colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
+\/\/[^\n]* ;
+{colorconstructor} {
+	string toReturn = strdup(yytext+10);
+	toReturn+(toReturn.find(")")) = \0;
+	int tmp = toReturn.find(',');
+	yyval.arg1 = toReturn.substr(0,tmp);
+	toReturn = toReturn+tmp+1;
+	tmp = toReturn.find(',');
+	yyval.arg2 = toReturn.substr(0,tmp);
+	toReturn = toReturn+tmp+1;
+	yyval.arg3 = toReturn;
+	return COLOR_CONSTRUCTOR;
+}
+{blackcolor} {
+	return BLACK_COLOR;
+}
+{cyancolor} {
+	return CYAN_COLOR;
+}
+{greencolor} {
+	return GREEN_COLOR;
+}
+{orangecolor} {
+	return ORANGE_COLOR;
+}
+{purplecolor} {
+	return PURPLE_COLOR;
+}
+{bluecolor} {
+	return BLUE_COLOR;
+}
+{yellowcolor} {
+	return YELLOW_COLOR;
+}
+{whitecolor} {
+	return WHITE_COLOR;
+}
+{redcolor} {
+	return RED_COLOR;
+}
+{bool_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+4);
+	return BOOL_FUNCT;
+}
+{str_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return STR_FUNCT;
+}
+{float_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+5);
+	return FLOAT_FUNCT;
+}
+{int_funct} {
+	yytext+(yytext.find(')')) = \0;
+	yyval.value = strdup(yytext+3);
+	return INT_FUNCT;
+}
+
+{if} {
+	return IF;
+}
+
+{else} {
+	return ELSE;
+}
+
+{while} {
+	return WHILE;
+}
 
 {id} {
 	yyval.id = strdup(yytext);
@@ -50,7 +143,7 @@ comma ','
 }
 
 {bool} {
-	if(strcmp(yytext, "true") == 0)
+	if(strcmp(yytext, "True") == 0)
 		yyval.bool = 1;
 	else
 		yyval.bool = 0;
@@ -97,7 +190,7 @@ comma ','
 		yyval.directions = 5;
 	else if(strcmp(yytext, "SE") == 0)
 		yyval.directions = 6;
-	else 
+	else
 		yyval.directions = 7;
 
 	return DIRECTION;
@@ -116,6 +209,11 @@ comma ','
 {color} {
 	yytext.color = *yytext;
 	return COLOR;
+}
+
+{bounding} {
+	yytext.bounding = *yytext;
+	return BOUNDING;
 }
 
 {var_decl} {
@@ -149,7 +247,9 @@ comma ','
 {comma} {
 	return COMMA;
 }
-
+. {
+	return ERROR_CHAR;
+}
 %%
 int main(){
 	yylex();
