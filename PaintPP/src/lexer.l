@@ -19,11 +19,11 @@ logical_concat (&&|\|\|)
 logical_not \!
 primary_ops [+\-*/]
 assign_op \=
-directions 'N'|'E'|'S'|'W'|'NE'|'SE'|'SW'|'NW'
-location Location\(({int}|{id}){comma}({int}|{id})\)
-size Size\(({int}|{id}){comma}({int}|{id})\)
+directions N|E|S|W|(NE)|(SE)|(SW)|(NW)
+location Location\((({float}|{int}|{id}){comma}({float}|{int}|{id}))\)
+size Size\(({float}|{int}|{id}){comma}({float}|{int}|{id})\)
 color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
-bounding BoundingRectangle\(({int}|{id}){comma}({int}|{id})\)
+bounding BoundingRectangle\(({id}){comma}({id})\)
 var_decl var
 draw_funct Draw\(({id}{comma}{id}({comma}{id})?({comma}{id})?({comma}{id})?)\)
 oval_shape Oval\(\)
@@ -42,16 +42,16 @@ str_funct str\(({int}|{float}|{bool}|{id})\)
 float_funct float\(({int}|{bool}|{string}|{id})\)
 int_funct int\(({float}|{bool}|{string})\)
 bool_funct bool\(({string}|{int}|{float}|{id})\)
-redcolor Color'.'RED
-blackcolor Color'.'BLACK
-cyancolor Color'.'CYAN
-greencolor Color'.'GREEN
-orangecolor Color'.'ORANGE
-purplecolor Color'.'PURPLE
-bluecolor Color'.'BLUE
-yellowcolor Color'.'YELLOW
-whitecolor Color'.'WHITE
-colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
+redcolor Color\.RED
+blackcolor Color\.BLACK
+cyancolor Color\.CYAN
+greencolor Color\.GREEN
+orangecolor Color\.ORANGE
+purplecolor Color\.PURPLE
+bluecolor Color\.BLUE
+yellowcolor Color\.YELLOW
+whitecolor Color\.WHITE
+colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
 \/\/[^\n]* printf("comment here");
 [ \t\r]+ ;
@@ -159,12 +159,13 @@ colorconstructor Color'.'rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})
 	printf("%s ", "ASSIGN");
 }
 
-{directions} {
-	printf("%s ", "DIR");
-}
 
 {location} {
 	printf("%s ", "loc");
+}
+
+{directions} {
+	printf("%s ", "DIR");
 }
 
 {size} {

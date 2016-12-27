@@ -18,27 +18,27 @@ var loc = Location(12,5)
 var size = Size(100,100)
 var boundingRect = BoundingRectangle(loc,size)
 var strokeWidth = 2
-var fillState = True
+var fillState = TRUE
 var color = Color.RED
-draw(oval, boundingRect, strokeWidth, fillState, color)
+Draw(oval,boundingRect,strokeWidth,fillState,color)
 
 loc = Location(100,200)
 size = Size(50,100)
 boundingRect = BoundingRectangle(loc,size)
 strokeWidth = 5
-fillState = False
+fillState = FALSE
 color = Color.GREEN
-draw(rect, boundingRect, strokeWidth, fillState, color)
+Draw(rect,boundingRect,strokeWidth,fillState,color)
 
 loc = Location(50,50)
 size = Size(1,130)
 boundingRect = BoundingRectangle(loc,size)
 strokeWidth = 5
 color = Color.YELLOW
-draw(line, boundingRect, strokeWidth, color)
+Draw(line,boundingRect,strokeWidth,color)
 
 loc = Location(75,200)
 size = Size(130, 500)
 boundingRect = BoundingRectangle(loc,size)
 color = Color.YELLOW
-draw(string, boundingRect, color)
+Draw(string,boundingRect,color)
