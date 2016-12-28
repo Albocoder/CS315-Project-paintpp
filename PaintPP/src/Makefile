@@ -1,20 +1,21 @@
-CC     = g++
-CXX    = g++
+CC     = g++ -std=c++11 -Wwrite-strings
+CXX    = g++ -std=c++11 -Wwrite-strings
 LEX    = flex
-PROG   = lexer
+YACC   = bison -y
+YFLAGS = -d
+PROGRAM = paintpp
 
-all: $(PROG)
+OBJECTS = $(PROGRAM).o scan.o parse.o 
 
-lex.yy.c: $(PROG).l
-	$(LEX) $(PROG).l  
+all: $(PROGRAM)
 
-$(PROG): lex.yy.c
-	$(CXX) -o $(PROG) lex.yy.c -ll
-
-test: input
-	cat input | ./$(PROG)
+$(PROGRAM): $(OBJECTS)
+scan.o: lexer.l parse.c
+parse.o: parse.y
+$(PROGRAM).o: $(PROGRAM).cpp 
 
 clean:
-	-rm -f lex.yy.c
-	-rm -f $(PROG)
-
+	-rm -f $(OBJECTS)
+	-rm -f y.tab.h
+	-rm -f parse.c
+	-rm -f $(PROGRAM)

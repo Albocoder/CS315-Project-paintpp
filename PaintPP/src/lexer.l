@@ -183,6 +183,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {draw_funct} {
 	printf("DRAW ");
+	yyval.stringedparams = * yytext;
+	return DRAW;
 }
 
 {oval_shape} {
@@ -222,10 +224,4 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 int yywrap(void)
 {
   return 1;
-}
-
-int main()
-{
-  yylex();
-  return 0;
 }

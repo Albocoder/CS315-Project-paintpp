@@ -1317,77 +1317,79 @@ YY_RULE_SETUP
 #line 184 "lexer.l"
 {
 	printf("DRAW ");
+	yylval.stringedparams = strdup(yytext);
+	return DRAW;
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 188 "lexer.l"
+#line 190 "lexer.l"
 {
 	printf("OVAL ");
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 192 "lexer.l"
+#line 194 "lexer.l"
 {
 	printf("RECT ");
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 196 "lexer.l"
+#line 198 "lexer.l"
 {
 	printf("LINE ");
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 200 "lexer.l"
+#line 202 "lexer.l"
 {
 	printf("LPAR ");
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 204 "lexer.l"
+#line 206 "lexer.l"
 {
 	printf("RPAR ");
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 208 "lexer.l"
+#line 210 "lexer.l"
 {
 	printf("comma ");
 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 211 "lexer.l"
+#line 213 "lexer.l"
 {
 	printf("%s ", "STRING ");
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 215 "lexer.l"
+#line 217 "lexer.l"
 {
 	printf("%s ", "ID ");
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 218 "lexer.l"
+#line 220 "lexer.l"
 { /* anything else is error */
   printf("ERROR ");
 }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 221 "lexer.l"
+#line 223 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1391 "lex.yy.c"
+#line 1393 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2388,7 +2390,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 221 "lexer.l"
+#line 223 "lexer.l"
 
 
 int yywrap(void)
