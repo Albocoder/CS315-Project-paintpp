@@ -51,7 +51,6 @@ purplecolor Color\.PURPLE
 bluecolor Color\.BLUE
 yellowcolor Color\.YELLOW
 whitecolor Color\.WHITE
-color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
 \/\/[^\n]* printf("comment here");
@@ -63,6 +62,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {comp_funct} {
 	printf("%s ", "compositeFunction ");
+
 }
 {arraytype} {
 	printf("arraytype ");
@@ -118,18 +118,23 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {if} {
 	printf("%s ", "IF");
+	return IF;
 }
 
 {else} {
 	printf("%s ", "ELSE");
+	return ELSE;
 }
 
 {while} {
 	printf("%s ", "WHILE");
+	return WHILE;
 }
 
 {float} {
 	printf("%s ", "FLOAT");
+	yyval.float = atof(yytext);
+	return FLOAT;
 }
 
 {int} {
@@ -167,10 +172,36 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {location} {
 	printf("%s ", "loc");
+	int stringlength = strlen(yytext);
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-5));
+	cout << stringlength << endl;
+	strncpy(newString,yytext+5,stringlength-6);
+	*(newString+stringlength-5) = '\0';
+	yylval.stringedparams = newString;
+	return DRAW;
 }
 
 {directions} {
 	printf("%s ", "DIR");
+	if(strcmp(*yytext, "N") == 0)
+		yyval.value = 0;
+	else if(strcmp(*yytext, "E") == 0)
+		yyval.value = 1;
+	else if(strcmp(*yytext, "S") == 0)
+		yyval.value = 2;
+	else if(strcmp(*yytext, "W") == 0)
+		yyval.value = 3;
+	else if(strcmp(*yytext, "NE") == 0)
+		yyval.value = 4;
+	else if(strcmp(*yytext, "SE") == 0)
+		yyval.value = 5;
+	else if(strcmp(*yytext, "NW") == 0)
+		yyval.value = 6;
+	else if(strcmp(*yytext, "SW") == 0)
+		yyval.value = 7;
+	else yyval.value = -1;
+
+	return DIRECTION;
 }
 
 {size} {
@@ -213,18 +244,29 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {lparan} {
 	printf("LPAR ");
+	return LPAR;
 }
 
 {rparan} {
 	printf("RPAR ");
+	return RPAR;
 }
 
 {comma} {
 	printf("comma ");
 	return COMMA;
 }
-{string} {
+
+{string} { //NEEDS CHECK
 	printf("%s ", "STRING ");
+	int stleng = strlen(yytext);
+	char *returnedString = (char*) malloc(sizeof(char)*(strleng-2)+1);
+	cout << stleng << endl;
+	strncpy(returnedString, yytext+1, stleng-1);
+	*(returnedString + stleng-1) = '\0';
+	cout << returnedString << endl;
+	yyval.strcontents = returnedString;
+	return returnedString;
 }
 
 {id} {
