@@ -113,8 +113,8 @@
 %}
 
 %%
-prog:   prog '\n' stmt        {cout << " im there!" << endl;}
-      | stmt                  {cout << "lsjflsflksj!" << endl;}
+prog:   prog stmt END  {cout << " im there!" << endl;}
+      | stmt  {cout << "lsjflsflksj!" << endl;}
       | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
 stmt:   cond
@@ -122,7 +122,7 @@ stmt:   cond
       | assign
       | func
       | alloc
-      |
+      |   {cout <<"this is an empty stmt"<< endl;}
       ;
 prim_exp:  int_exp
           | float_exp
@@ -149,8 +149,9 @@ type:  INT
       | comp_exp
       ;
 */
-assign: ID ASSIGN_OP assign_tail              {cout << "imn here!" << endl;}
-      | VAR ID ASSIGN_OP assign_tail;
+assign: ID ASSIGN_OP assign_tail
+      | VAR ID ASSIGN_OP assign_tail {cout << "print out!" << endl;}
+      ;
       //maybe we should get rid of ASSIGN_OP for better error checking
       //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
 
@@ -164,7 +165,7 @@ int_exp:  INT int_exp_tail;
 
 int_exp_tail: PRIMARY_OPS int_exp
               | PRIMARY_OPS INT_FUNCT
-              |
+              |   {cout << "assign again" << endl;}
               ;
 float_exp:  FLOAT float_exp_tail
               ;
@@ -212,7 +213,6 @@ conv_exp: INT_FUNCT
             | STRING_FUNCT
             | BOOL_FUNCT
             ;
-end: END;
 
 %%
 // report errors

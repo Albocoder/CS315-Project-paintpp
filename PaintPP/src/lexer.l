@@ -369,9 +369,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	yylval.id = yytext;
 	return ID;
 }
-" " {}
-"\n" {  return END; } 
-.|\n {printf(strdup(yytext)); }
+\$ {  return END; }
 
 %%
 
