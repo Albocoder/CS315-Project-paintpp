@@ -62,10 +62,30 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {comp_funct} {
 	printf("%s ", "compositeFunction ");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+10,stringlength-11);
+    *(newString+stringlength-10) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 
 }
 {arraytype} {
 	printf("arraytype ");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+    cout << stringLength << endl;
+    strncpy(newString,yytext,stringlength);
+    for(int i = 0; i++; i < stringLength)
+    {
+        if(*(yytext+i) == '[')
+            *(newString+i) = ',';
+        if(*(yytext+i) == ']')
+            *(newString+i) = '\0';
+    }
+    yylval.stringedparams = newString;
+    return ARRAY_TYPE;
 }
 {brackop} {
 	printf("%s ", "brackop");
