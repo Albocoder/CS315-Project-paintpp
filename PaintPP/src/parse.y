@@ -113,28 +113,33 @@
 %}
 
 %%
-prog:   prog stmt END  {cout << " im there!" << endl;}
-      | stmt  {cout << "lsjflsflksj!" << endl;}
+prog:   prog '\n' stmt END  {cout << " in prog!" << endl;}
+      | stmt  {cout << "in stmt!" << endl;}
       | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
+
 stmt:   cond
       | loop
-      | assign {cout <<"yooooooooooo"<<endl;}
+      | assign  {cout <<"in assign"<<endl;}
       | func
       | alloc
       |   {cout <<"this is an empty stmt"<< endl;}
       ;
+
 prim_exp:  int_exp
           | float_exp
           | boolean_exp
           ;
-alloc: VAR ' ' ID {cout <<"yo var"<<endl;}
+
+alloc: VAR ' ' ID {cout <<"in var"<<endl;}
       ;
+
 shape_functions: LINE
                   | OVAL
                   | RECTANGLE
                   | COMPOSITE
                   ;
+
 comp_exp: LOCATION
               | SIZE
               | COLORCONSTR
@@ -150,13 +155,12 @@ type:  INT
       ;
 */
 assign: ID ASSIGN_OP assign_tail
-      | VAR ID ASSIGN_OP assign_tail {cout << "print out!" << endl;}
+      | VAR ID ASSIGN_OP assign_tail  {cout << "in var id assign!" << endl;}
       ;
       //maybe we should get rid of ASSIGN_OP for better error checking
       //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
 
-assign_tail:  //ID
-              | prim_exp
+assign_tail:  prim_exp
               | comp_exp
               | string_exp
               ;
@@ -165,14 +169,17 @@ int_exp:  INT int_exp_tail;
 
 int_exp_tail: PRIMARY_OPS int_exp
               | PRIMARY_OPS INT_FUNCT
-              |   {cout << "assign again" << endl;}
+              |   {cout << "empty int_exp_tail" << endl;}
               ;
+
 float_exp:  FLOAT float_exp_tail
               ;
+
 float_exp_tail:  PRIMARY_OPS float_exp
               | PRIMARY_OPS FLOAT_FUNCT
               |
               ;
+
 string_exp:  STRING
               | STRING_FUNCT
               //| string_exp '+' STRING_FUNCT
@@ -205,7 +212,7 @@ loop: WHILE LPAR logic RPAR BRACKOP prog BRACKCL;
 
 func: comp_exp
         | conv_exp
-        | DRAW
+        | DRAW 
         ;
 
 conv_exp: INT_FUNCT
