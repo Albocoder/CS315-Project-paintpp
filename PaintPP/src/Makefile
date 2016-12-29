@@ -14,6 +14,10 @@ lexer.o: lexer.l parse.c
 parse.o: parse.y
 $(PROGRAM).o: $(PROGRAM).cpp
 
+test: input
+	cat input | ./$(PROGRAM)
+
+
 clean:
 	-rm -f $(OBJECTS)
 	-rm -f y.tab.h

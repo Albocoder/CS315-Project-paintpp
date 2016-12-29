@@ -14,9 +14,10 @@
 %token OVAL
 %token COMPOSITE
 %token SIZE
-%token COLOR
+%token COLORCONSTR
 %token LOCATION
 %token BOUNDRECT
+%token DIRECTION
 
 %token INT
 %token FLOAT
@@ -46,19 +47,58 @@
 %token RPAR
 %token LPAR
 
+//color tokens
+%token blackcolor
+%token cyancolor
+%token greencolor
+%token orangecolor
+%token purplecolor
+%token bluecolor
+%token yellowcolor
+%token whitecolor
+%token redcolor
+
+%token ERROR_CHAR
 
 %union{
   char * stringedparams;
+  float flot;
+  int integer;
+  bool boolean;
+  int value;
+  char * boundrectparams;
+  char * rectparams;
+  char * strcontents;
+  char * colorconstr;
+  char * boolconvertparams;
+  char * strconvertparams;
+  char * floatconvertparams;
+  char * intconvertparams;
+  char * id;
+  char * sizeparams;
+  char * location;
 }
 
 %type <stringedparams> DRAW
-%type <float> FLOAT
+%type <flot> FLOAT
 %type <integer> INT
 %type <boolean> BOOLEAN
-%type <value> LOCATION
+%type <location> LOCATION
 %type <boundrectparams> BOUNDRECT
 %type <rectparams> RECTANGLE
 %type <strcontents> STRING
+%type <colorconstr> COLORCONSTR
+%type <boolconvertparams> BOOL_FUNCT
+%type <strconvertparams> STRING_FUNCT
+%type <floatconvertparams> FLOAT_FUNCT
+%type <intconvertparams> INT_FUNCT
+%type <value> DIRECTION
+%type <sizeparams> SIZE
+%type <id> ID
+
+%left '+' '-' // the order defines precedence,
+%left '*' '/' // so * and / has higher precedence than + and - because they are lower in our list so processed after + and -   /* % left means left associative */
+%nonassoc NEG
 
 %{
   #include <unordered_map>
@@ -73,16 +113,21 @@
 %}
 
 %%
-
-prog:   prog '\n' stmt
-      | stmt
+prog:   prog '\n' stmt        {cout << " im there!" << endl;}
+      | stmt                  {cout << "lsjflsflksj!" << endl;}
+      | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
 stmt:   cond
       | loop
       | assign
       | func
       | alloc
+      |
       ;
+prim_exp:  int_exp
+          | float_exp
+          | boolean_exp
+          ;
 alloc: VAR ' ' ID
       ;
 shape_functions: LINE
@@ -92,9 +137,10 @@ shape_functions: LINE
                   ;
 comp_exp: LOCATION
               | SIZE
-              | COLOR
+              | COLORCONSTR
               | shape_functions
               ;
+/*
 type:  INT
       | FLOAT
       | STRING
@@ -102,21 +148,18 @@ type:  INT
       | ARRAY_TYPE
       | comp_exp
       ;
-assign: ID ASSIGN_OP assign_tail
+*/
+assign: ID ASSIGN_OP assign_tail              {cout << "imn here!" << endl;}
       | VAR ID ASSIGN_OP assign_tail;
       //maybe we should get rid of ASSIGN_OP for better error checking
       //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
 
-assign_tail:  ID
+assign_tail:  //ID
               | prim_exp
               | comp_exp
               | string_exp
               ;
 
-prim_exp:  int_exp
-          | float_exp
-          | boolean_exp
-          ;
 int_exp:  INT int_exp_tail;
 
 int_exp_tail: PRIMARY_OPS int_exp
@@ -131,8 +174,8 @@ float_exp_tail:  PRIMARY_OPS float_exp
               ;
 string_exp:  STRING
               | STRING_FUNCT
-              | string_exp '+' STRING_FUNCT
-              | STRING_FUNCT '+'  string_exp
+              //| string_exp '+' STRING_FUNCT
+              //| STRING_FUNCT '+'  string_exp
               | string_exp '+' string_exp
               ;
 
@@ -142,7 +185,7 @@ bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
                 |
                 ;
 
-logic: LOGNOT logic
+logic: LOGNOT logic %prec NEG
       | ID LOGICAL_OPS ID
       | ID LOGICAL_OPS  BOOL_FUNCT
       | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
