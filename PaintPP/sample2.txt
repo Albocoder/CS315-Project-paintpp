@@ -1,0 +1,52 @@
+//This program creates composite objects by making use of while loops and if/else statements
+//This program adds 20 oval or rectangle objects depending on the shapeEnum to the composite object one by one and then draws them
+var i = 1
+var shapeEnum = 0 //If 0 oval is drawn, if 1 rectangle is drawn
+var arr
+var comp
+var boundingRect
+var loc = Location(250,250)
+var size
+while(i < 21)
+{	
+	var x = 20*i
+	x = 100+x
+	if(shapeEnum == 0)
+	{
+		arr[i] = Oval()
+		i = i + 1
+		arr[i] = Location(x,x)
+		i = i + 1
+		arr[i] = Size(120,120)
+		i = i + 1
+		arr[i] = 10
+		i = i + 1
+		arr[i] = TRUE
+		i = i + 1
+		arr[i] = Color.YELLOW
+		shapeEnum = 1
+	}
+
+	if(shapeEnum == 1)
+	{
+		arr[i] = Rect(1)
+		i = i + 1
+		arr[i] = Location(x,x)
+		i = i + 1
+		arr[i] = Size(120,120)
+		i = i + 1
+		arr[i] = 10
+		i = i + 1
+		arr[i] = TRUE
+		i = i + 1
+		arr[i] = Color.BLUE
+		shapeEnum = 0
+	}
+	comp = Composite(arr)
+
+	width_length = 120*i
+	size = Size(width_length,width_length)
+	boundingRect = BoundingRectangle(loc,size)
+	Draw(comp,boundingRect)
+	i = i + 1
+}
