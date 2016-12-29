@@ -496,10 +496,13 @@ union yyalloc
 #define YYNNTS  23
 /* YYNRULES -- Number of rules.  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define YYNRULES  61
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  91
 =======
+=======
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 #define YYNRULES  60
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  90
@@ -552,6 +555,7 @@ static const yytype_uint8 yytranslate[] =
 
 #if YYDEBUG
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
@@ -591,6 +595,9 @@ static const yytype_int8 yyrhs[] =
 =======
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 >>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
+=======
+  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 static const yytype_uint8 yyrline[] =
 {
        0,   116,   116,   117,   118,   120,   121,   122,   123,   124,
@@ -621,7 +628,11 @@ static const char *const yytname[] =
   "assign", "assign_tail", "int_exp", "int_exp_tail", "float_exp",
   "float_exp_tail", "string_exp", "boolean_exp", "bool_exp_tail", "logic",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "cond", "cond_tail", "loop", "func", "conv_exp", "end", 0
+=======
+  "cond", "cond_tail", "loop", "func", "conv_exp", YY_NULLPTR
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 =======
   "cond", "cond_tail", "loop", "func", "conv_exp", YY_NULLPTR
 >>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
@@ -642,6 +653,7 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
@@ -745,6 +757,55 @@ static const yytype_int8 yypgoto[] =
      -48,   -47,   -18,   -48,   -48,   -48,     5,   -48,    49,    26,
      -48,    22,   -48,    29,   -48,    20,   -15,   -48,   -48,   -48,
      -48,   -48,   -48
+=======
+#define YYPACT_NINF -56
+
+#define yypact_value_is_default(Yystate) \
+  (!!((Yystate) == (-56)))
+
+#define YYTABLE_NINF -1
+
+#define yytable_value_is_error(Yytable_value) \
+  0
+
+  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+     STATE-NUM.  */
+static const yytype_int16 yypact[] =
+{
+      -1,   -56,    -4,     0,   -56,   -56,   -56,   -56,   -56,   -56,
+     -56,   -56,   -56,   -56,   -56,   -31,   -17,   -56,    47,   -56,
+     -56,   -56,   -56,   -56,   -56,   -56,   -56,   -56,    15,    28,
+     167,    12,    12,   -56,   -10,   167,   -56,    29,    12,    31,
+      32,   -56,   -56,    41,   -56,   -56,   -56,   -56,   -56,    -8,
+     -56,    42,    33,    34,   -56,   -56,     2,   -56,    17,   -56,
+      19,   -56,    13,    16,    12,   -56,    38,    39,   -56,   -56,
+     -56,   -56,   -56,   -56,   -56,   -56,   -56,    42,    -1,    -1,
+     -56,    76,   108,   -56,    50,    51,   -56,    -1,   140,   -56
+};
+
+  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+     Performed when YYTABLE does not specify something else to do.  Zero
+     means the default is an error.  */
+static const yytype_uint8 yydefact[] =
+{
+      10,    56,     0,     0,    15,    17,    16,    18,    20,    21,
+      19,    57,    58,    59,    60,     0,     0,     4,    10,     3,
+       9,    22,    54,     7,     5,     6,     8,    55,     0,     0,
+      25,     0,     0,     1,     0,    25,    14,    48,     0,    32,
+      36,    37,    38,    49,    26,    27,    23,    11,    12,    28,
+      13,    42,     0,     0,     2,    24,     0,    43,     0,    29,
+       0,    33,     0,     0,     0,    40,     0,     0,    44,    45,
+      31,    30,    35,    34,    47,    46,    39,    42,    10,    10,
+      41,    10,    10,    53,    52,     0,    50,    10,    10,    51
+};
+
+  /* YYPGOTO[NTERM-NUM].  */
+static const yytype_int8 yypgoto[] =
+{
+     -56,   -55,   -18,   -56,   -56,   -56,     4,   -56,    48,     8,
+     -56,    35,   -56,    30,   -56,    20,   -16,   -56,   -56,   -56,
+     -56,   -56
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -1563,8 +1624,12 @@ yyreduce:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Line 1267 of yacc.c.  */
 #line 1580 "y.tab.c"
+=======
+#line 1460 "y.tab.c" /* yacc.c:1646  */
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 =======
 #line 1460 "y.tab.c" /* yacc.c:1646  */
 >>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
