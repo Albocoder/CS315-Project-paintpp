@@ -45,6 +45,7 @@
 %}
 
 %%
+/*
 prog:   prog '\n' stmt
       | stmt
       ;
@@ -83,13 +84,17 @@ assign_tail:  ID
               | comp_exp
             //  | string_exp
               ;
+
 prim_exp:  int_exp
           //| float_exp
           //| boolean_exp
           ;
 int_exp:  INT int_exp_tail;
-
-int_exp_tail: PRIMARY_OPS (int_exp | INT_FUNCT ) | ε
+*/
+int_exp_tail: PRIMARY_OPS int_exp
+              | PRIMARY_OPS INT_FUNCT
+              //| ε
+              ;
 
 %%
 // report errors
