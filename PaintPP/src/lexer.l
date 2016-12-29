@@ -370,7 +370,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 
 
-\$ { return END; }
+. { return ERROR_CHAR; }
 
 %%
 
