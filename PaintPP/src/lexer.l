@@ -6,6 +6,7 @@
 #include <stdlib.h>
 using namespace std;
 void yyerror(char *);
+#include "y.tab.h"
 %}
 
 id [a-zA-Z][a-zA-Z0-9_]*
@@ -22,7 +23,6 @@ assign_op \=
 directions N|E|S|W|(NE)|(SE)|(SW)|(NW)
 location Location\((({float}|{int}|{id}){comma}({float}|{int}|{id}))\)
 size Size\(({float}|{int}|{id}){comma}({float}|{int}|{id})\)
-color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 bounding BoundingRectangle\(({id}){comma}({id})\)
 var_decl var
 draw_funct Draw\(({id}{comma}{id}({comma}{id})?({comma}{id})?({comma}{id})?)\)
@@ -51,6 +51,7 @@ purplecolor Color\.PURPLE
 bluecolor Color\.BLUE
 yellowcolor Color\.YELLOW
 whitecolor Color\.WHITE
+color Color\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\)
 %%
 \/\/[^\n]* printf("comment here");
@@ -58,6 +59,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {var_decl} {
 	printf("VAR ");
+	return VAR;
 }
 {comp_funct} {
 	printf("%s ", "compositeFunction ");
@@ -132,6 +134,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {int} {
 	printf("%s ", "INT");
+	return INT;
 }
 
 
@@ -153,10 +156,12 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {primary_ops} {
 	printf("%s ", "PRIMOP");
+	return PRIMARY_OPS;
 }
 
 {assign_op} {
-	printf("%s ", "ASSIGN");
+	printf("%s ", "ASSIGN_OP");
+	return ASSIGN_OP;
 }
 
 
@@ -169,7 +174,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 
 {size} {
-	printf("%s ", "SZ");
+	printf("%s ", "SIZE");
+	return SIZE;
 }
 
 {color} {
@@ -180,23 +186,29 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "BOUNDRECT");
 }
 
-
 {draw_funct} {
-	printf("DRAW ");
-	yyval.stringedparams = * yytext;
+	int stringlength = strlen(yytext);
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-5));
+	cout << stringlength << endl;
+	strncpy(newString,yytext+5,stringlength-6);
+	*(newString+stringlength-5) = '\0';
+	yylval.stringedparams = newString;
 	return DRAW;
 }
 
 {oval_shape} {
 	printf("OVAL ");
+	return OVAL;
 }
 
 {rect_shape} {
 	printf("RECT ");
+	return RECTANGLE;
 }
 
 {line_shape} {
 	printf("LINE ");
+	return LINE;
 }
 
 {lparan} {
@@ -209,6 +221,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {comma} {
 	printf("comma ");
+	return COMMA;
 }
 {string} {
 	printf("%s ", "STRING ");
@@ -216,12 +229,13 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {id} {
 	printf("%s ", "ID ");
+	return ID;
 }
 . { /* anything else is error */
   printf("ERROR ");
 }
 %%
-int yywrap(void)
-{
+
+int yywrap(void){
   return 1;
 }

@@ -5,14 +5,14 @@ YACC   = bison -y
 YFLAGS = -d
 PROGRAM = paintpp
 
-OBJECTS = $(PROGRAM).o scan.o parse.o 
+OBJECTS = $(PROGRAM).o lexer.o parse.o
 
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECTS)
-scan.o: lexer.l parse.c
+lexer.o: lexer.l parse.c
 parse.o: parse.y
-$(PROGRAM).o: $(PROGRAM).cpp 
+$(PROGRAM).o: $(PROGRAM).cpp
 
 clean:
 	-rm -f $(OBJECTS)
