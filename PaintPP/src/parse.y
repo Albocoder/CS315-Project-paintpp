@@ -113,7 +113,7 @@
 %}
 
 %%
-prog:   prog '\n' stmt END  {cout << " in prog!" << endl;}
+prog:   stmt prog END {cout << " in prog!" << endl;}
       | stmt  {cout << "in stmt!" << endl;}
       | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
@@ -131,7 +131,7 @@ prim_exp:  int_exp
           | boolean_exp
           ;
 
-alloc: VAR ' ' ID {cout <<"in var"<<endl;}
+alloc: VAR ID {cout <<"in var"<<endl;}
       ;
 
 shape_functions: LINE
@@ -180,7 +180,7 @@ float_exp_tail:  PRIMARY_OPS float_exp
               |
               ;
 
-string_exp:  STRING
+string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
               | STRING_FUNCT
               //| string_exp '+' STRING_FUNCT
               //| STRING_FUNCT '+'  string_exp

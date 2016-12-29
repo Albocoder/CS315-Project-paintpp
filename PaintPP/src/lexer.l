@@ -351,24 +351,26 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	return COMMA;
 }
 
+{id} {
+	printf("%s ", "ID");
+	yylval.id = yytext;
+	return ID;
+}
+
 {string} {
-	printf("%s ", "STRING ");
+	printf("%s", "STRING");
 	int strleng = strlen(yytext);
 	char *returnedString = (char*) malloc(sizeof(char)*(strleng-1));
 	cout << strleng << endl;
 	strncpy(returnedString, yytext+1, strleng-2);
 	*(returnedString + strleng-1) = '\0';
-	cout << returnedString << endl;
+	cout << "RETURNED STRING" << returnedString << endl;
 	yylval.strcontents = returnedString;
 	return STRING;
 }
 
-{id} {
-	printf("%s ", "ID ");
-	yylval.id = yytext;
-	return ID;
-}
-\$ {  return END; }
+
+\$ { return END; }
 
 %%
 
