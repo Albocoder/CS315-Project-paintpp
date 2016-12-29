@@ -139,12 +139,15 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {int} {
 	printf("%s ", "INT");
+	yyval.integer = atoi(yytext);
 	return INT;
 }
 
 
 {bool} {
 	printf("%s ", "BOOL");
+	if(stcmp(*yytext, "TRUE") || )
+	yyval.boolean = 
 }
 
 {logical_ops} {
