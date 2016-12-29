@@ -107,33 +107,43 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {blackcolor} {
 	printf("%s ", "blackcol");
+	return blackcol;
 }
 {cyancolor} {
 	printf("%s ", "cyancol");
+	return cyancol;
 }
 {greencolor} {
 	printf("%s ", "greencol");
+	return greencol;
 }
 {orangecolor} {
 	printf("%s ", "orangecol");
+	return orangecol;
 }
 {purplecolor} {
 	printf("%s ", "purpcol");
+	return purpcol;
 }
 {bluecolor} {
 	printf("%s ", "blucol");
+	return bluecol;
 }
 {yellowcolor} {
 	printf("%s ", "yellowcol");
+	return yellowcol;
 }
 {whitecolor} {
 	printf("%s ", "whitecol");
+	return whitecol;
 }
 {redcolor} {
 	printf("%s ", "redcol");
+	return redcol;
 }
 {bool_funct} {
 	printf("%s ", "boolconvert");
+	
 }
 {str_funct} {
 	printf("%s ", "strconvert");
