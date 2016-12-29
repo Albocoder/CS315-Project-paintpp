@@ -45,7 +45,7 @@
 %}
 
 %%
-/*
+
 prog:   prog '\n' stmt
       | stmt
       ;
@@ -82,18 +82,44 @@ assign: ID ASSIGN_OP assign_tail
 assign_tail:  ID
               | prim_exp
               | comp_exp
-            //  | string_exp
+              | string_exp
               ;
 
 prim_exp:  int_exp
-          //| float_exp
-          //| boolean_exp
+          | float_exp
+          | boolean_exp
           ;
 int_exp:  INT int_exp_tail;
-*/
+
 int_exp_tail: PRIMARY_OPS int_exp
               | PRIMARY_OPS INT_FUNCT
-              //| ε
+              |
+              ;
+float_exp:  FLOAT float_exp_tail
+              ;
+float_exp_tail:  PRIMARY_OPS float_exp
+              | PRIMARY_OPS FLOAT_FUNCT
+              |
+              ;
+string_exp:  STRING
+              | STRING_FUNCT
+              | string_exp + STRING_FUNCT
+              | STRING_FUNCT +  string_exp
+              | string_exp + string_exp
+              ;
+
+boolean_exp: logic bool_exp_tail
+              ;
+logic: '!' logic
+      | ID LOGICAL_OPS ID
+      | ID LOGICAL_OPS  BOOL_FUNCT
+      | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
+      | BOOL_FUNCT LOGICAL_OPS ID
+      | ID
+      | BOOL_FUNCT
+      ;
+bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
+              |
               ;
 
 %%
