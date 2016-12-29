@@ -119,7 +119,7 @@ prog:   prog stmt END  {cout << " im there!" << endl;}
       ;
 stmt:   cond
       | loop
-      | assign
+      | assign {cout <<"yooooooooooo"<<endl;}
       | func
       | alloc
       |   {cout <<"this is an empty stmt"<< endl;}
