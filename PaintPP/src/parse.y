@@ -16,6 +16,7 @@
 %token SIZE
 %token COLOR
 %token LOCATION
+%token BOUNDRECT
 
 %token INT
 %token FLOAT
@@ -26,12 +27,13 @@
 //ops
 %token PRIMARY_OPS
 %token LOGICAL_OPS
+%token LOGICAL_CONCAT
 
 //converters
 %token INT_FUNCT
 %token FLOAT_FUNCT
 %token STRING_FUNCT
-%token BOOLEAN_FUNCT
+%token BOOL_FUNCT
 
 //conditionals
 %token WHILE
@@ -50,6 +52,14 @@
 }
 
 %type <stringedparams> DRAW
+%type <float> FLOAT
+%type <integer> INT
+%type <boolean> BOOLEAN
+%type <location> LOCATION
+%type <value> LOCATION
+%type <boundrectparams> BOUNDRECT
+%type <rectparams> RECTANGLE
+%type <strcontents> STRING
 
 %{
   #include <unordered_map>
@@ -60,7 +70,7 @@
   void yyerror(char *);
   int yylex(void);
   // symbol table to hold variable values
-  unordered_map<string, int> symbols;
+  unordered_map<string, string> symbols;
 %}
 
 %%
@@ -71,7 +81,7 @@ prog:   prog '\n' stmt
 stmt:   cond
       | loop
       | assign
-      | function
+      | func
       | alloc
       ;
 alloc: VAR ' ' ID
