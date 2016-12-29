@@ -62,10 +62,30 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {comp_funct} {
 	printf("%s ", "compositeFunction ");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+10,stringlength-11);
+    *(newString+stringlength-10) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 
 }
 {arraytype} {
 	printf("arraytype ");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+    cout << stringLength << endl;
+    strncpy(newString,yytext,stringlength);
+    for(int i = 0; i++; i < stringLength)
+    {
+        if(*(yytext+i) == '[')
+            *(newString+i) = ',';
+        if(*(yytext+i) == ']')
+            *(newString+i) = '\0';
+    }
+    yylval.stringedparams = newString;
+    return ARRAY_TYPE;
 }
 {brackop} {
 	printf("%s ", "brackop");
@@ -77,36 +97,53 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {colorconstructor} {
 	printf("%s ", "colorConstr");
+	int stringlength = strlen(yytext);
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+	cout << stringlength << endl;
+	strncpy(newString,yytext+10,stringlength-11);
+	*(newString+stringlength-10) = '\0';
+	yylval.colorconstr = newString;
+	return COLORCONSTR;
 }
 {blackcolor} {
 	printf("%s ", "blackcol");
+	return blackcol;
 }
 {cyancolor} {
 	printf("%s ", "cyancol");
+	return cyancol;
 }
 {greencolor} {
 	printf("%s ", "greencol");
+	return greencol;
 }
 {orangecolor} {
 	printf("%s ", "orangecol");
+	return orangecol;
 }
 {purplecolor} {
 	printf("%s ", "purpcol");
+	return purpcol;
 }
 {bluecolor} {
 	printf("%s ", "blucol");
+	return bluecol;
 }
 {yellowcolor} {
 	printf("%s ", "yellowcol");
+	return yellowcol;
 }
 {whitecolor} {
 	printf("%s ", "whitecol");
+	return whitecol;
 }
 {redcolor} {
 	printf("%s ", "redcol");
+	return redcol;
 }
 {bool_funct} {
 	printf("%s ", "boolconvert");
+	
 }
 {str_funct} {
 	printf("%s ", "strconvert");
@@ -135,34 +172,34 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {float} {
 	printf("%s ", "FLOAT");
-	yyval.float = atof(*yytext);
+	yylval.float = atof(*yytext);
 	return FLOAT;
 }
 
 {int} {
 	printf("%s ", "INT");
-	yyval.integer = atoi(*yytext);
+	yylval.integer = atoi(*yytext);
 	return INT;
 }
 
 
 {bool} {
 	printf("%s ", "BOOL");
-	if(stcmp(*yytext, "TRUE") )
-		yyval.boolean = TRUE;
-	if(stcmp(*yytext, "FALSE") )
-		yyval.boolean = FALSE;
+	if(strcmp(*yytext, "TRUE") )
+		yylval.boolean = TRUE;
+	if(strcmp(*yytext, "FALSE") )
+		yylval.boolean = FALSE;
 	return BOOL;
 }
 
 {logical_ops} {
-	printf("%s ", "LOGOP");
-	return LOGOP;
+	printf("%s ", "LOGICAL_OPS");
+	return LOGICAL_OPS;
 }
 
 {logical_concat} {
-	printf("%s ", "LOGCONC");
-	return LOGCONC;
+	printf("%s ", "LOGICAL_CONCAT");
+	return LOGICAL_CONCAT;
 }
 
 {logical_not} {
@@ -171,7 +208,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 
 {primary_ops} {
-	printf("%s ", "PRIMOP");
+	printf("%s ", "PRIMARY_OPS");
 	return PRIMARY_OPS;
 }
 
@@ -187,7 +224,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	char * newString = (char*) malloc(sizeof(char)*(stringlength-9));
 	cout << stringlength << endl;
 	strncpy(newString,yytext+9,stringlength-10);
-	*(newString+stringlength+9) = '\0';
+	*(newString+stringlength-9) = '\0';
 	yylval.location = newString;
 	return LOCATION;
 }
@@ -195,22 +232,22 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 {directions} {
 	printf("%s ", "DIR");
 	if(strcmp(*yytext, "N") == 0)
-		yyval.value = 0;
+		yylval.value = 0;
 	else if(strcmp(*yytext, "E") == 0)
-		yyval.value = 1;
+		yylval.value = 1;
 	else if(strcmp(*yytext, "S") == 0)
-		yyval.value = 2;
+		yylval.value = 2;
 	else if(strcmp(*yytext, "W") == 0)
-		yyval.value = 3;
+		yylval.value = 3;
 	else if(strcmp(*yytext, "NE") == 0)
-		yyval.value = 4;
+		yylval.value = 4;
 	else if(strcmp(*yytext, "SE") == 0)
-		yyval.value = 5;
+		yylval.value = 5;
 	else if(strcmp(*yytext, "NW") == 0)
-		yyval.value = 6;
+		yylval.value = 6;
 	else if(strcmp(*yytext, "SW") == 0)
-		yyval.value = 7;
-	else yyval.value = -1;
+		yylval.value = 7;
+	else yylval.value = -1;
 
 	return DIRECTION;
 }
@@ -260,7 +297,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	strncpy(returnedString, yytext+5, stleng-6);
 	*(returnedString + stleng-5) = '\0';
 	cout << returnedString << endl;
-	yyval.rectparams = returnedString;
+	yylval.rectparams = returnedString;
 	return RECTANGLE;
 }
 
@@ -292,13 +329,13 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	strncpy(returnedString, yytext+1, stleng-2);
 	*(returnedString + stleng-1) = '\0';
 	cout << returnedString << endl;
-	yyval.strcontents = returnedString;
+	yylval.strcontents = returnedString;
 	return STRING;
 }
 
 {id} {
 	printf("%s ", "ID ");
-	yyval.id = *yytext;
+	yylval.id = *yytext;
 	return ID;
 }
 . { /* anything else is error */
