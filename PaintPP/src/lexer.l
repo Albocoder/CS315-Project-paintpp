@@ -148,8 +148,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
     cout << stringLength << endl;
     strncpy(newString,yytext+5,stringlength-6);
     *(newString+stringlength-5) = '\0';
-    yylval.stringedparams = newString;
-    return COMPOSITE;
+    yylval.boolconvertparams = newString;
+    return BOOLCONVERT;
 	
 }
 {str_funct} {
@@ -159,8 +159,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
     cout << stringLength << endl;
     strncpy(newString,yytext+4,stringlength-5);
     *(newString+stringlength-4) = '\0';
-    yylval.stringedparams = newString;
-    return COMPOSITE;
+    yylval.strconvertparams = newString;
+    return STRCONVERT;
 }
 {float_funct} {
 	printf("%s ", "floatconvert");
@@ -169,8 +169,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
     cout << stringLength << endl;
     strncpy(newString,yytext+7,stringlength-8);
     *(newString+stringlength-7) = '\0';
-    yylval.stringedparams = newString;
-    return COMPOSITE;
+    yylval.floatconvertparams = newString;
+    return FLOATCONVERT;
 }
 {int_funct} {
 	printf("%s ", "intconvert");
@@ -179,8 +179,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
     cout << stringLength << endl;
     strncpy(newString,yytext+4,stringlength-5);
     *(newString+stringlength-4) = '\0';
-    yylval.stringedparams = newString;
-    return COMPOSITE;
+    yylval.intconvertparams = newString;
+    return INTCONVERT;
 }
 
 {if} {
