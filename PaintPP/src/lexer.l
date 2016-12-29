@@ -69,9 +69,11 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {brackop} {
 	printf("%s ", "brackop");
+	return BRACKOP;
 }
 {brackcl} {
 	printf("%s ", "brackcl");
+	return BRACKCL;
 }
 {colorconstructor} {
 	printf("%s ", "colorConstr");
@@ -133,33 +135,39 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {float} {
 	printf("%s ", "FLOAT");
-	yyval.float = atof(yytext);
+	yyval.float = atof(*yytext);
 	return FLOAT;
 }
 
 {int} {
 	printf("%s ", "INT");
-	yyval.integer = atoi(yytext);
+	yyval.integer = atoi(*yytext);
 	return INT;
 }
 
 
 {bool} {
 	printf("%s ", "BOOL");
-	if(stcmp(*yytext, "TRUE") || )
-	yyval.boolean = 
+	if(stcmp(*yytext, "TRUE") )
+		yyval.boolean = TRUE;
+	if(stcmp(*yytext, "FALSE") )
+		yyval.boolean = FALSE;
+	return BOOL;
 }
 
 {logical_ops} {
 	printf("%s ", "LOGOP");
+	return LOGOP;
 }
 
 {logical_concat} {
 	printf("%s ", "LOGCONC");
+	return LOGCONC;
 }
 
 {logical_not} {
 	printf("%s ", "LOGNOT");
+	return LOGNOT;
 }
 
 {primary_ops} {
@@ -174,14 +182,14 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 
 {location} {
-	printf("%s ", "loc");
+	printf("%s ", "location");
 	int stringlength = strlen(yytext);
-	char * newString = (char*) malloc(sizeof(char)*(stringlength-5));
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-9));
 	cout << stringlength << endl;
-	strncpy(newString,yytext+5,stringlength-6);
-	*(newString+stringlength-5) = '\0';
-	yylval.stringedparams = newString;
-	return DRAW;
+	strncpy(newString,yytext+9,stringlength-10);
+	*(newString+stringlength+9) = '\0';
+	yylval.location = newString;
+	return LOCATION;
 }
 
 {directions} {
@@ -209,15 +217,24 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {size} {
 	printf("%s ", "SIZE");
+	int stringlength = strlen(yytext);
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-5));
+	cout << stringlength << endl;
+	strncpy(newString,yytext+5,stringlength-6);
+	*(newString+stringlength-5) = '\0';
+	yylval.sizeparams = newString;
 	return SIZE;
-}
-
-{color} {
-	printf("%s ", "COL");
 }
 
 {bounding} {
 	printf("%s ", "BOUNDRECT");
+	int stringlength = strlen(yytext);
+	char * newString = (char*) malloc(sizeof(char)*(stringlength-10));
+	cout << stringlength << endl;
+	strncpy(newString,yytext+10,stringlength-11);
+	*(newString+stringlength-10) = '\0';
+	yylval.boundrectparams = newString;
+	return BOUNDRECT;
 }
 
 {draw_funct} {
@@ -237,6 +254,13 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 
 {rect_shape} {
 	printf("RECT ");
+	int stleng = strlen(yytext);
+	char *returnedString = (char*) malloc(sizeof(char)*(strleng-5));
+	cout << stleng << endl;
+	strncpy(returnedString, yytext+5, stleng-6);
+	*(returnedString + stleng-5) = '\0';
+	cout << returnedString << endl;
+	yyval.rectparams = returnedString;
 	return RECTANGLE;
 }
 
@@ -260,20 +284,21 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	return COMMA;
 }
 
-{string} { //NEEDS CHECK
+{string} { 
 	printf("%s ", "STRING ");
 	int stleng = strlen(yytext);
-	char *returnedString = (char*) malloc(sizeof(char)*(strleng-2)+1);
+	char *returnedString = (char*) malloc(sizeof(char)*(strleng-1));
 	cout << stleng << endl;
-	strncpy(returnedString, yytext+1, stleng-1);
+	strncpy(returnedString, yytext+1, stleng-2);
 	*(returnedString + stleng-1) = '\0';
 	cout << returnedString << endl;
 	yyval.strcontents = returnedString;
-	return returnedString;
+	return STRING;
 }
 
 {id} {
 	printf("%s ", "ID ");
+	yyval.id = *yytext;
 	return ID;
 }
 . { /* anything else is error */
