@@ -105,7 +105,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	yylval.colorconstr = newString;
 	return COLORCONSTR;
 }
-{blackcolor} {
+{blackcolor}
 	printf("%s ", "blackcol");
 	return blackcol;
 }
@@ -143,16 +143,44 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 }
 {bool_funct} {
 	printf("%s ", "boolconvert");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-5));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+5,stringlength-6);
+    *(newString+stringlength-5) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 	
 }
 {str_funct} {
 	printf("%s ", "strconvert");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-4));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+4,stringlength-5);
+    *(newString+stringlength-4) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 }
 {float_funct} {
 	printf("%s ", "floatconvert");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-7));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+7,stringlength-8);
+    *(newString+stringlength-7) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 }
 {int_funct} {
 	printf("%s ", "intconvert");
+    int stringLength = strlen(yytext);
+    char * newString = (char*) malloc(sizeof(char)*(stringlength-4));
+    cout << stringLength << endl;
+    strncpy(newString,yytext+4,stringlength-5);
+    *(newString+stringlength-4) = '\0';
+    yylval.stringedparams = newString;
+    return COMPOSITE;
 }
 
 {if} {
