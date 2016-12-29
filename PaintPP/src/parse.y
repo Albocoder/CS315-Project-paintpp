@@ -1,9 +1,14 @@
+//draw function
 %token DRAW
+
+//std
 %token VAR
 %token ID
 %token ASSIGN_OP
 %token COMMA
+%token LOGNOT
 
+//composite types
 %token LINE
 %token RECTANGLE
 %token OVAL
@@ -18,13 +23,27 @@
 %token BOOLEAN
 %token ARRAY_TYPE
 
+//ops
 %token PRIMARY_OPS
+%token LOGICAL_OPS
 
 //converters
 %token INT_FUNCT
 %token FLOAT_FUNCT
 %token STRING_FUNCT
 %token BOOLEAN_FUNCT
+
+//conditionals
+%token WHILE
+%token IF
+%token ELSE
+
+//parantheses
+%token BRACKOP
+%token BRACKCL
+%token RPAR
+%token LPAR
+
 
 %union{
   char * stringedparams;
@@ -49,10 +68,10 @@
 prog:   prog '\n' stmt
       | stmt
       ;
-stmt: //  cond
-    //  | loop
+stmt:   cond
+      | loop
       | assign
-    //  | function
+      | function
       | alloc
       ;
 alloc: VAR ' ' ID
@@ -114,7 +133,7 @@ bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
                 |
                 ;
 
-logic: '!' logic
+logic: LOGNOT logic
       | ID LOGICAL_OPS ID
       | ID LOGICAL_OPS  BOOL_FUNCT
       | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
@@ -123,16 +142,17 @@ logic: '!' logic
       | BOOL_FUNCT
       ;
 
-cond: IF '(' logic ')' '{' prog '}' cond_tail;
+cond: IF LPAR logic RPAR BRACKOP prog BRACKCL cond_tail;
 
-cond_tail: ELSE '{' prog '}'
+cond_tail: ELSE BRACKOP prog BRACKCL
             |
             ;
 
-loop: WHILE '(' logic ')' '{' prog '}';
+loop: WHILE LPAR logic RPAR BRACKOP prog BRACKCL;
 
 func: comp_exp
         | conv_exp
+        | DRAW
         ;
 
 conv_exp: INT_FUNCT
@@ -140,7 +160,6 @@ conv_exp: INT_FUNCT
             | STRING_FUNCT
             | BOOL_FUNCT
             ;
-
 
 %%
 // report errors
