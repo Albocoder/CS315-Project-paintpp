@@ -122,13 +122,13 @@ stmt:   cond
       | assign
       | func
       | alloc
-      |
+      | {cout <<"this is an empty stmt"<< endl;}
       ;
 prim_exp:  int_exp
           | float_exp
           | boolean_exp
           ;
-alloc: VAR ' ' ID
+alloc: VAR ' ' ID {cout <<"the id is: "<< $3 << endl;}
       ;
 shape_functions: LINE
                   | OVAL
