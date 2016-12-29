@@ -59,7 +59,7 @@
 %token redcolor
 
 %token ERROR_CHAR
-
+%token END
 %union{
   char * stringedparams;
   float flot;
@@ -128,7 +128,7 @@ prim_exp:  int_exp
           | float_exp
           | boolean_exp
           ;
-alloc: VAR ' ' ID {cout <<"the id is: "<< $3 << endl;}
+alloc: VAR ' ' ID {cout <<"yo var"<<endl;}
       ;
 shape_functions: LINE
                   | OVAL
@@ -212,6 +212,7 @@ conv_exp: INT_FUNCT
             | STRING_FUNCT
             | BOOL_FUNCT
             ;
+end: END;
 
 %%
 // report errors

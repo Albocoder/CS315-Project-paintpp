@@ -1,2 +1,3 @@
-var a
-//asdasdas
+var a = 1
+var b = 93
+Draw(1,1,1)
