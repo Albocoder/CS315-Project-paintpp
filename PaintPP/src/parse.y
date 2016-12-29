@@ -45,6 +45,7 @@
 %}
 
 %%
+<<<<<<< HEAD
 prog:   prog '\n' stmt
       | stmt
       ;
@@ -90,6 +91,58 @@ prim_exp:  int_exp
 int_exp:  INT int_exp_tail;
 
 int_exp_tail: PRIMARY_OPS (int_exp | INT_FUNCT ) | ε
+=======
+/*
+prog:   prog '\n' stmt
+      | stmt
+      ;
+stmt: //  cond
+    //  | loop
+      | assign
+    //  | function
+      | alloc
+      ;
+alloc: VAR ' ' ID
+      ;
+shape_functions: LINE
+                  | OVAL
+                  | RECTANGLE
+                  | COMPOSITE
+                  ;
+comp_exp: LOCATION
+              | SIZE
+              | COLOR
+              | shape_functions
+              ;
+type:  INT
+      | FLOAT
+      | STRING
+      | BOOLEAN
+      | ARRAY_TYPE
+      | comp_exp
+      ;
+assign: ID ASSIGN_OP assign_tail
+      | VAR ID ASSIGN_OP assign_tail;
+      //maybe we should get rid of ASSIGN_OP for better error checking
+      //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
+
+assign_tail:  ID
+              | prim_exp
+              | comp_exp
+            //  | string_exp
+              ;
+
+prim_exp:  int_exp
+          //| float_exp
+          //| boolean_exp
+          ;
+int_exp:  INT int_exp_tail;
+*/
+int_exp_tail: PRIMARY_OPS int_exp
+              | PRIMARY_OPS INT_FUNCT
+              //| ε
+              ;
+>>>>>>> branch 'master' of https://github.com/Albocoder/CS315-Project-paintpp.git
 
 %%
 // report errors
