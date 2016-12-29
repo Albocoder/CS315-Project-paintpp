@@ -102,7 +102,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	cout << stringlength << endl;
 	strncpy(newString,yytext+10,stringlength-11);
 	*(newString+stringlength-10) = '\0';
-	yylval.location = newString;
+	yylval.colorconstr = newString;
 	return COLORCONSTR;
 }
 {blackcolor} {
