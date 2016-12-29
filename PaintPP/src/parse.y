@@ -108,8 +108,12 @@ string_exp:  STRING
               | string_exp + string_exp
               ;
 
-boolean_exp: logic bool_exp_tail
-              ;
+boolean_exp: logic bool_exp_tail;
+
+bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
+                |
+                ;
+
 logic: '!' logic
       | ID LOGICAL_OPS ID
       | ID LOGICAL_OPS  BOOL_FUNCT
@@ -118,9 +122,25 @@ logic: '!' logic
       | ID
       | BOOL_FUNCT
       ;
-bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
-              |
-              ;
+
+cond: IF '(' logic ')' '{' prog '}' cond_tail;
+
+cond_tail: ELSE '{' prog '}'
+            |
+            ;
+
+loop: WHILE '(' logic ')' '{' prog '}';
+
+func: comp_exp
+        | conv_exp
+        ;
+
+conv_exp: INT_FUNCT
+            | FLOAT_FUNCT
+            | STRING_FUNCT
+            | BOOL_FUNCT
+            ;
+
 
 %%
 // report errors
