@@ -308,7 +308,6 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 {draw_funct} {
 	int stringLength = strlen(yytext);
 	char * newString = (char*) malloc(sizeof(char)*(stringLength-5));
-	cout << stringLength << endl;
 	strncpy(newString,yytext+5,stringLength-6);
 	*(newString+stringLength-5) = '\0';
 	yylval.stringedparams = newString;
