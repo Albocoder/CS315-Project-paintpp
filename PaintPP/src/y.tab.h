@@ -58,25 +58,26 @@ extern int yydebug;
     SIZE = 268,
     COLOR = 269,
     LOCATION = 270,
-    INT = 271,
-    FLOAT = 272,
-    STRING = 273,
-    BOOLEAN = 274,
-    ARRAY_TYPE = 275,
-    PRIMARY_OPS = 276,
-    LOGICAL_OPS = 277,
-    LOGICAL_CONCAT = 278,
-    INT_FUNCT = 279,
-    FLOAT_FUNCT = 280,
-    STRING_FUNCT = 281,
-    BOOL_FUNCT = 282,
-    WHILE = 283,
-    IF = 284,
-    ELSE = 285,
-    BRACKOP = 286,
-    BRACKCL = 287,
-    RPAR = 288,
-    LPAR = 289
+    BOUNDRECT = 271,
+    INT = 272,
+    FLOAT = 273,
+    STRING = 274,
+    BOOLEAN = 275,
+    ARRAY_TYPE = 276,
+    PRIMARY_OPS = 277,
+    LOGICAL_OPS = 278,
+    LOGICAL_CONCAT = 279,
+    INT_FUNCT = 280,
+    FLOAT_FUNCT = 281,
+    STRING_FUNCT = 282,
+    BOOL_FUNCT = 283,
+    WHILE = 284,
+    IF = 285,
+    ELSE = 286,
+    BRACKOP = 287,
+    BRACKCL = 288,
+    RPAR = 289,
+    LPAR = 290
   };
 #endif
 /* Tokens.  */
@@ -93,36 +94,37 @@ extern int yydebug;
 #define SIZE 268
 #define COLOR 269
 #define LOCATION 270
-#define INT 271
-#define FLOAT 272
-#define STRING 273
-#define BOOLEAN 274
-#define ARRAY_TYPE 275
-#define PRIMARY_OPS 276
-#define LOGICAL_OPS 277
-#define LOGICAL_CONCAT 278
-#define INT_FUNCT 279
-#define FLOAT_FUNCT 280
-#define STRING_FUNCT 281
-#define BOOL_FUNCT 282
-#define WHILE 283
-#define IF 284
-#define ELSE 285
-#define BRACKOP 286
-#define BRACKCL 287
-#define RPAR 288
-#define LPAR 289
+#define BOUNDRECT 271
+#define INT 272
+#define FLOAT 273
+#define STRING 274
+#define BOOLEAN 275
+#define ARRAY_TYPE 276
+#define PRIMARY_OPS 277
+#define LOGICAL_OPS 278
+#define LOGICAL_CONCAT 279
+#define INT_FUNCT 280
+#define FLOAT_FUNCT 281
+#define STRING_FUNCT 282
+#define BOOL_FUNCT 283
+#define WHILE 284
+#define IF 285
+#define ELSE 286
+#define BRACKOP 287
+#define BRACKCL 288
+#define RPAR 289
+#define LPAR 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 49 "parse.y" /* yacc.c:1909  */
+#line 50 "parse.y" /* yacc.c:1909  */
 
   char * stringedparams;
 
-#line 126 "y.tab.h" /* yacc.c:1909  */
+#line 128 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

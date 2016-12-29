@@ -55,7 +55,6 @@
 %type <float> FLOAT
 %type <integer> INT
 %type <boolean> BOOLEAN
-%type <location> LOCATION
 %type <value> LOCATION
 %type <boundrectparams> BOUNDRECT
 %type <rectparams> RECTANGLE
