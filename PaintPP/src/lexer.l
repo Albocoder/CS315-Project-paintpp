@@ -370,8 +370,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	return ID;
 }
 " " {}
-"\n" {  return END; } 
-.|\n {printf(strdup(yytext)); }
+\$ END
+. {printf(strdup(yytext)); }
 
 %%
 

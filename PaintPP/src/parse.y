@@ -113,13 +113,13 @@
 %}
 
 %%
-prog:   prog '\n' stmt        {cout << " im there!" << endl;}
-      | stmt                  {cout << "lsjflsflksj!" << endl;}
+prog:   prog stmt end  {cout << " im there!" << endl;}
+      | stmt  {cout << "lsjflsflksj!" << endl;}
       | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
 stmt:   cond
       | loop
-      | assign
+      | assign {cout <<"yooooooooooo"<<endl;}
       | func
       | alloc
       |
@@ -149,8 +149,9 @@ type:  INT
       | comp_exp
       ;
 */
-assign: ID ASSIGN_OP assign_tail              {cout << "imn here!" << endl;}
-      | VAR ID ASSIGN_OP assign_tail;
+assign: ID ASSIGN_OP assign_tail  {cout << "imn here!" << endl;}
+      | VAR ID ASSIGN_OP assign_tail  {cout << "im here!" << endl;}
+      ;
       //maybe we should get rid of ASSIGN_OP for better error checking
       //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
 
