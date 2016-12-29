@@ -113,8 +113,7 @@
 %}
 
 %%
-
-prog:   stmt prog  {cout << " in prog!" << endl;}
+prog:   stmt prog END {cout << " in prog!" << endl;}
       | stmt  {cout << "in stmt!" << endl;}
       | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
       ;
@@ -182,7 +181,7 @@ float_exp_tail:  PRIMARY_OPS float_exp
               |
               ;
 
-string_exp:  STRING
+string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
               | STRING_FUNCT
               //| string_exp '+' STRING_FUNCT
               //| STRING_FUNCT '+'  string_exp
