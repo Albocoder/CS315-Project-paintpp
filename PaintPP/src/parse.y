@@ -113,17 +113,18 @@
 %}
 
 %%
-prog:   stmt prog {cout << " in prog!" << endl;}
-      | stmt  {cout << "in stmt!" << endl;}
-      | ERROR_CHAR  {cout <<"yo from gulo"<< endl;}
+
+prog:   stmt prog
+      | stmt
+      | ERROR_CHAR
       ;
 
 stmt:   cond
       | loop
-      | assign  {cout <<"in assign"<<endl;}
+      | assign
       | func
       | alloc
-      |   {cout <<"this is an empty stmt"<< endl;}
+      |
       ;
 
 prim_exp:  int_exp
@@ -131,7 +132,7 @@ prim_exp:  int_exp
           | boolean_exp
           ;
 
-alloc: VAR ID {cout <<"in var"<<endl;}
+alloc: VAR ID
       ;
 
 shape_functions: LINE
