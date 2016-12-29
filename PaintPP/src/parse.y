@@ -122,9 +122,9 @@ float_exp_tail:  PRIMARY_OPS float_exp
               ;
 string_exp:  STRING
               | STRING_FUNCT
-              | string_exp + STRING_FUNCT
-              | STRING_FUNCT +  string_exp
-              | string_exp + string_exp
+              | string_exp '+' STRING_FUNCT
+              | STRING_FUNCT '+'  string_exp
+              | string_exp '+' string_exp
               ;
 
 boolean_exp: logic bool_exp_tail;
