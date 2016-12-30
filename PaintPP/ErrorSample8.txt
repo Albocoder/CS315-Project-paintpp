@@ -1,0 +1,8 @@
+Draw(str, boundingRect, strokeWidth)//there is use before definition error: str, boundingRect and strokeWidth are not known at the time Draw is called
+var str = “Hi there!”
+var loc = Location(500,500)
+var size = Size(100,500)
+boundingRect = BoundingRectange(loc, size)
+var strokeWidth = 20
+
+

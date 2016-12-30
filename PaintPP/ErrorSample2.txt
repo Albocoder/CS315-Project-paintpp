@@ -1,0 +1,9 @@
+var line = Line(E,1,1)
+var loc = Location(100,300)
+var size = Size(150,350)
+var boundingRect = BoundingRectangle(loc,size)
+var strokeWidth = 10
+var fillState = False
+var fillColor = Color.GREEN
+
+Draw(line,boundingRect,strokeWidth,fillState,fillColor)//draw function does not have a fill state, therefore does not take it as a parameter in the dry function

@@ -1,0 +1,9 @@
+var rect = Rect(1)
+var loc = Location(250,250)
+var size = Size(50,50)
+var boundingRect = BoundingRectangle(loc,size)
+var strokeWidth = 20
+var fillState = False
+var fillColor = Color.RED
+
+Draw(rect, boundingRect, strokeWidth, fillState, fillColor)//because of the spaces that come after commas, the program does not understand the statement and generates error
