@@ -201,6 +201,7 @@ logic: LOGNOT logic %prec NEG
       | BOOL_FUNCT LOGICAL_OPS ID
       | ID
       | BOOL_FUNCT
+      | BOOLEAN
       ;
 
 cond: IF LPAR logic RPAR BRACKOP prog BRACKCL cond_tail;
