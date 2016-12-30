@@ -1,0 +1,3 @@
+var str = “Hello World!”
+var floaty = 3.067
+var str_floaty = str + floaty //This cannot be done because floaty should be converted to string before it is added up with a string with the str(floaty) function
