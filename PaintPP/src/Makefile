@@ -14,8 +14,8 @@ lexer.o: lexer.l parse.c
 parse.o: parse.y
 $(PROGRAM).o: $(PROGRAM).cpp
 
-test: input
-	cat input | ./$(PROGRAM)
+test: input.ppp
+	cat input.ppp | ./$(PROGRAM)
 
 
 clean:
