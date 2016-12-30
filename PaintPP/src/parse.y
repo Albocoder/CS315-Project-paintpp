@@ -122,9 +122,8 @@ prog:   stmt prog
 stmt:   cond
       | loop
       | assign
-      | func
+      | DRAW
       | alloc
-      |
       ;
 
 prim_exp:  int_exp
@@ -136,65 +135,58 @@ alloc: VAR ID
       ;
 
 shape_functions: LINE
-                  | OVAL
-                  | RECTANGLE
-                  | COMPOSITE
-                  ;
+                | OVAL
+                | RECTANGLE
+                | COMPOSITE
+                ;
 
 comp_exp: LOCATION
-              | SIZE
-              | COLORCONSTR
-              | shape_functions
-              ;
-/*
-type:  INT
-      | FLOAT
-      | STRING
-      | BOOLEAN
-      | ARRAY_TYPE
-      | comp_exp
-      ;
-*/
+          | SIZE
+          | COLORCONSTR
+          | shape_functions
+          ;
+
 assign: ID ASSIGN_OP assign_tail
       | VAR ID ASSIGN_OP assign_tail
       ;
       //maybe we should get rid of ASSIGN_OP for better error checking
       //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
 
-assign_tail:  //ID
-              prim_exp
+assign_tail:  prim_exp
               | comp_exp
-              | conv_exp
               | string_exp
               ;
 
-int_exp:  INT int_exp_tail;
+int_exp:  INT int_exp_tail
+          | INT_FUNCT
+          ;
 
 int_exp_tail: PRIMARY_OPS int_exp
-              | PRIMARY_OPS INT_FUNCT
               |
               ;
 
 float_exp:  FLOAT float_exp_tail  {cout<<"float exp tail"<<endl;}
-              ;
+            | FLOAT_FUNCT
+            ;
 
 float_exp_tail:  PRIMARY_OPS float_exp
-              | PRIMARY_OPS FLOAT_FUNCT
-              |
-              ;
-
-string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
-              | STRING_FUNCT
-              //| string_exp '+' STRING_FUNCT
-              //| STRING_FUNCT '+'  string_exp
-              | string_exp '+' string_exp
-              ;
-
-boolean_exp: logic bool_exp_tail;
-
-bool_exp_tail: LOGICAL_CONCAT logic bool_exp_tail
                 |
                 ;
+
+string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
+            | STRING_FUNCT
+            //| string_exp '+' STRING_FUNCT
+            //| STRING_FUNCT '+'  string_exp
+            | string_exp '+' string_exp
+            ;
+
+boolean_exp: logic bool_exp_tail
+              ;
+
+
+bool_exp_tail: LOGICAL_CONCAT boolean_exp
+              |
+              ;
 
 logic: LOGNOT logic %prec NEG
       | ID LOGICAL_OPS ID
@@ -204,26 +196,17 @@ logic: LOGNOT logic %prec NEG
       | ID
       | BOOL_FUNCT
       | BOOLEAN
+      | LPAR logic RPAR
       ;
 
 cond: IF LPAR logic RPAR BRACKOP prog BRACKCL cond_tail;
 
 cond_tail: ELSE BRACKOP prog BRACKCL
-            |
-            ;
+          |
+          ;
 
 loop: WHILE LPAR logic RPAR BRACKOP prog BRACKCL;
 
-func: comp_exp
-        | conv_exp
-        | DRAW  {cout << "Draw Params: " << $1 << endl;}
-        ;
-
-conv_exp: INT_FUNCT
-            | FLOAT_FUNCT  {cout<<"float conv"<<endl;}
-            | STRING_FUNCT
-            | BOOL_FUNCT
-            ;
 
 %%
 // report errors
