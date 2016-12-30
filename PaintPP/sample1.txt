@@ -3,7 +3,7 @@
 var oval = Oval()
 
 var rect = Rect(1)// Rect function takes 0 or 1 as parameters. These are enums for the rounded corners; 0 means corners are not rounded 
-//and 1 means corners are rounded.
+//and 1 means corners are rounded. 
 
 var line = Line(NW,2,1) //Line function takes direction of the line, arrows and arrow sizes relative to stroke width as parameters in 
 //that order.Each of these are enumerated; meaning that NW means direction in the northwest direction, S means direction in the south 
@@ -26,7 +26,7 @@ loc = Location(100,200)
 size = Size(50,100)
 boundingRect = BoundingRectangle(loc,size)
 strokeWidth = 5
-fillState = FALSE
+fillState = bool(1)
 color = Color.GREEN
 Draw(rect,boundingRect,strokeWidth,fillState,color)
 
@@ -38,7 +38,7 @@ color = Color.YELLOW
 Draw(line,boundingRect,strokeWidth,color)
 
 loc = Location(75,200)
-size = Size(130, 500)
+size = Size(130,500)
 boundingRect = BoundingRectangle(loc,size)
 color = Color.YELLOW
 Draw(string,boundingRect,color)
