@@ -3,4 +3,4 @@ while(FALSE)
     var a = 3
 }
 Draw(Gulsum,Melis,Erin)
-var a = float(3)
+var a = bool(3.3)
