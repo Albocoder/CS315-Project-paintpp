@@ -3,4 +3,7 @@ while(FALSE)
     var a = 3
 }
 Draw(Gulsum,Melis,Erin)
-var a = bool(3.3)
+var a = float(3)
+var a = Oval()
+if(a==b&&a){
+}
