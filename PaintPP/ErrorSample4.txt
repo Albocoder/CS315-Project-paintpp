@@ -1,0 +1,9 @@
+var oval = Oval()
+var boundingRect = BoundingRectangle(100,100)
+var strokeWidth = 10
+var fillState = True
+var fillColor = Color.BLUE
+
+var i = 0
+while(i<20)
+	Draw(oval,boundingRectangle,strokeWidth,fillState,fillColor)//Even it is one line of code, brackets in the while loop is needed or else it will generate an error

@@ -1,0 +1,4 @@
+var rect = Rect(0);
+var oval = Oval();
+var line = Line(SW, 1, 2);
+//Semicolons are not recognized by the program so this will generate an error

@@ -1,0 +1,7 @@
+var rect = Rectangle(1)
+var boundingRect = BoundingRectangle(100,300)
+var strokeWidth = 20
+var fillState = False
+var fillColor = Color.PURPLE
+while(0)//This will generate an error because inside the while’s parenthesis only logical statement can be written so inside it should write False
+	draw(rect,boundingRect,strokeWidth,fillState,fillColor)
