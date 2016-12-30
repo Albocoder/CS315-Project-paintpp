@@ -1,2 +1,2 @@
-if(a==b||TRUE&&!(a==f&&bool(2)==TRUE)&&bool(1)){
+if(a==b||TRUE&&!(a==f&&bool(2)==TRUE)){
 }

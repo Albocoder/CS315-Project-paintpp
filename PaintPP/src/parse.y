@@ -180,27 +180,26 @@ string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
             | string_exp '+' string_exp
             ;
 
-boolean_exp: logic bool_exp_tail
-            | LPAR boolean_exp RPAR
-            | LOGNOT boolean_exp %prec NEG
+boolean_exp: logic bool_exp_tail 
+            | LPAR boolean_exp RPAR {cout<<"boolean_exp two"<<endl;}
+            | LOGNOT boolean_exp %prec NEG {cout<<"boolean_exp one"<<endl;}
             ;
 
 
-bool_exp_tail: LOGICAL_CONCAT boolean_exp
+bool_exp_tail: LOGICAL_CONCAT boolean_exp {cout<<"LOGICAL CONCAT HERE"<<endl;}
               |
               ;
 
-logic: ID LOGICAL_OPS ID {cout << "twooo" << endl;} //its hereeee
-      | ID LOGICAL_OPS  BOOL_FUNCT
-      | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
-      | BOOL_FUNCT LOGICAL_OPS ID
-      | ID
-      | BOOL_FUNCT
-      | BOOLEAN
+logic:  logic_terminals LOGICAL_OPS logic_terminals {cout<<"witth LOGICAL_OPS"<<endl;}
+      | logic_terminals  {cout<<"logicterminale"<<endl;}
       ;
+logic_terminals: ID {cout<<"ID here"<<endl;} 
+                | BOOLEAN {cout<<"BOOLEAN here"<<endl;} 
+                | BOOL_FUNCT {cout<<"BOOL_FUNCT here"<<endl;} 
+                ;
 
-cond: IF LPAR boolean_exp RPAR BRACKOP prog BRACKCL cond_tail
-      | IF LPAR boolean_exp RPAR BRACKOP BRACKCL cond_tail
+cond: IF boolean_exp BRACKOP prog BRACKCL cond_tail {cout<<"IF REACHED"<<endl;}
+      | IF boolean_exp BRACKOP BRACKCL cond_tail
       ;
 
 cond_tail: ELSE BRACKOP prog BRACKCL
