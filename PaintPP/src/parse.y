@@ -181,31 +181,36 @@ string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
             ;
 
 boolean_exp: logic bool_exp_tail
-              ;
+            | LPAR boolean_exp RPAR
+            | LOGNOT boolean_exp %prec NEG
+            ;
 
 
 bool_exp_tail: LOGICAL_CONCAT boolean_exp
               |
               ;
 
-logic: LOGNOT logic %prec NEG
-      | ID LOGICAL_OPS ID
+logic: ID LOGICAL_OPS ID {cout << "twooo" << endl;} //its hereeee
       | ID LOGICAL_OPS  BOOL_FUNCT
       | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
       | BOOL_FUNCT LOGICAL_OPS ID
       | ID
       | BOOL_FUNCT
       | BOOLEAN
-      | LPAR logic RPAR
       ;
 
-cond: IF LPAR logic RPAR BRACKOP prog BRACKCL cond_tail;
+cond: IF LPAR boolean_exp RPAR BRACKOP prog BRACKCL cond_tail
+      | IF LPAR boolean_exp RPAR BRACKOP BRACKCL cond_tail
+      ;
 
 cond_tail: ELSE BRACKOP prog BRACKCL
+          | ELSE BRACKOP BRACKCL
           |
           ;
 
-loop: WHILE LPAR logic RPAR BRACKOP prog BRACKCL;
+loop: WHILE LPAR boolean_exp RPAR BRACKOP prog BRACKCL
+        | WHILE LPAR boolean_exp RPAR BRACKOP BRACKCL
+        ;
 
 
 %%

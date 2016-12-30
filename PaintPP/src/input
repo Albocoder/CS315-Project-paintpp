@@ -1,9 +1,2 @@
-while(FALSE)
-{
-    var a = 3
-}
-Draw(Gulsum,Melis,Erin)
-var a = float(3)
-var a = Oval()
-if(a==b&&a){
+if(a==b||TRUE&&!(a==f&&bool(2)==TRUE)&&bool(1)){
 }
