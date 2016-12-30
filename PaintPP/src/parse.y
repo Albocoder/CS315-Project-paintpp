@@ -164,6 +164,7 @@ assign: ID ASSIGN_OP assign_tail
 assign_tail:  //ID
               prim_exp
               | comp_exp
+              | conv_exp
               | string_exp
               ;
 
@@ -174,7 +175,7 @@ int_exp_tail: PRIMARY_OPS int_exp
               |
               ;
 
-float_exp:  FLOAT float_exp_tail
+float_exp:  FLOAT float_exp_tail  {cout<<"float exp tail"<<endl;}
               ;
 
 float_exp_tail:  PRIMARY_OPS float_exp
@@ -219,7 +220,7 @@ func: comp_exp
         ;
 
 conv_exp: INT_FUNCT
-            | FLOAT_FUNCT
+            | FLOAT_FUNCT  {cout<<"float conv"<<endl;}
             | STRING_FUNCT
             | BOOL_FUNCT
             ;

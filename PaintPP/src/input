@@ -1,1 +1,6 @@
-while(FALSE){var a = 3}
+while(FALSE)
+{
+    var a = 3
+}
+Draw(Gulsum,Melis,Erin)
+var a = bool(3.3)
