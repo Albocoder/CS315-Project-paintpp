@@ -60,6 +60,7 @@
 
 %token ERROR_CHAR
 %token END
+
 %union{
   char * stringedparams;
   float flot;
@@ -142,19 +143,31 @@ shape_functions: LINE
 
 comp_exp: LOCATION
           | SIZE
+          | BOUNDRECT
           | COLORCONSTR
           | shape_functions
           ;
 
 assign: ID ASSIGN_OP assign_tail
+      | ARRAY_TYPE ASSIGN_OP assign_tail
       | VAR ID ASSIGN_OP assign_tail
       ;
-      //maybe we should get rid of ASSIGN_OP for better error checking
-      //=== can be translated as ASSIGN ASSIGN ASSIGN and not error
+
 
 assign_tail:  prim_exp
               | comp_exp
               | string_exp
+              | color_consts
+              ;
+color_consts:  blackcolor
+              | cyancolor
+              | greencolor
+              | orangecolor
+              | purplecolor
+              | bluecolor
+              | yellowcolor
+              | whitecolor
+              | redcolor
               ;
 
 int_exp:  INT int_exp_tail
@@ -165,7 +178,7 @@ int_exp_tail: PRIMARY_OPS int_exp
               |
               ;
 
-float_exp:  FLOAT float_exp_tail  {cout<<"float exp tail"<<endl;}
+float_exp:  FLOAT float_exp_tail
             | FLOAT_FUNCT
             ;
 
@@ -173,14 +186,14 @@ float_exp_tail:  PRIMARY_OPS float_exp
                 |
                 ;
 
-string_exp:  STRING {cout<<"IN STRING!!!"<<endl;}
+string_exp:  STRING
             | STRING_FUNCT
             //| string_exp '+' STRING_FUNCT
             //| STRING_FUNCT '+'  string_exp
             | string_exp '+' string_exp
             ;
 
-boolean_exp: logic bool_exp_tail
+boolean_exp: logic bool_exp_tail 
             | LPAR boolean_exp RPAR
             | LOGNOT boolean_exp %prec NEG
             ;
@@ -190,17 +203,16 @@ bool_exp_tail: LOGICAL_CONCAT boolean_exp
               |
               ;
 
-logic: ID LOGICAL_OPS ID {cout << "twooo" << endl;} //its hereeee
-      | ID LOGICAL_OPS  BOOL_FUNCT
-      | BOOL_FUNCT LOGICAL_OPS BOOL_FUNCT
-      | BOOL_FUNCT LOGICAL_OPS ID
-      | ID
-      | BOOL_FUNCT
-      | BOOLEAN
+logic:  logic_terminals LOGICAL_OPS logic_terminals
+      | logic_terminals
       ;
+logic_terminals: ID
+                | BOOLEAN
+                | BOOL_FUNCT
+                ;
 
-cond: IF LPAR boolean_exp RPAR BRACKOP prog BRACKCL cond_tail
-      | IF LPAR boolean_exp RPAR BRACKOP BRACKCL cond_tail
+cond: IF boolean_exp BRACKOP prog BRACKCL cond_tail
+      | IF boolean_exp BRACKOP BRACKCL cond_tail
       ;
 
 cond_tail: ELSE BRACKOP prog BRACKCL

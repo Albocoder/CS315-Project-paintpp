@@ -64,7 +64,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "compositeFunction ");
     int stringLength = strlen(yytext);
     char * newString = (char*) malloc(sizeof(char)*(stringLength-10));
-    cout << stringLength << endl;
+    //cout << stringLength << endl;
     strncpy(newString,yytext+10,stringLength-11);
     *(newString+stringLength-10) = '\0';
     yylval.stringedparams = newString;
@@ -74,8 +74,8 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 {arraytype} {
 	printf("arraytype ");
     int stringLength = strlen(yytext);
-    char * newString = (char*) malloc(sizeof(char)*(stringLength-10));
-    cout << stringLength << endl;
+    char * newString = (char*) malloc(sizeof(char)*(stringLength-2));
+    //cout << stringLength << endl;
     strncpy(newString,yytext,stringLength);
     for(int i = 0; i++; i < stringLength)
     {
@@ -99,7 +99,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "colorConstr");
 	int stringLength = strlen(yytext);
 	char * newString = (char*) malloc(sizeof(char)*(stringLength-10));
-	cout << stringLength << endl;
+	//cout << stringLength << endl;
 	strncpy(newString,yytext+10,stringLength-11);
 	*(newString+stringLength-10) = '\0';
 	yylval.colorconstr = newString;
@@ -146,7 +146,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "boolconvert");
     int stringLength = strlen(yytext);
     char * newString = (char*) malloc(sizeof(char)*(stringLength-5));
-    cout << stringLength << endl;
+    //cout << stringLength << endl;
     strncpy(newString,yytext+5,stringLength-6);
     *(newString+stringLength-5) = '\0';
     yylval.boolconvertparams = newString;
@@ -157,7 +157,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "strconvert");
     int stringLength = strlen(yytext);
     char * newString = (char*) malloc(sizeof(char)*(stringLength-4));
-    cout << stringLength << endl;
+    //cout << stringLength << endl;
     strncpy(newString,yytext+4,stringLength-5);
     *(newString+stringLength-4) = '\0';
     yylval.strconvertparams = newString;
@@ -167,7 +167,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "floatconvert");
     int stringLength = strlen(yytext);
     char * newString = (char*) malloc(sizeof(char)*(stringLength-7));
-    cout << stringLength << endl;
+    //cout << stringLength << endl;
     strncpy(newString,yytext+7,stringLength-8);
     *(newString+stringLength-7) = '\0';
     yylval.floatconvertparams = newString;
@@ -177,7 +177,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "intconvert");
     int stringLength = strlen(yytext);
     char * newString = (char*) malloc(sizeof(char)*(stringLength-4));
-    cout << stringLength << endl;
+    //cout << stringLength << endl;
     strncpy(newString,yytext+4,stringLength-5);
     *(newString+stringLength-4) = '\0';
     yylval.intconvertparams = newString;
@@ -253,7 +253,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "location");
 	int stringLength = strlen(yytext);
 	char * newString = (char*) malloc(sizeof(char)*(stringLength-9));
-	cout << stringLength << endl;
+	//cout << stringLength << endl;
 	strncpy(newString,yytext+9,stringLength-10);
 	*(newString+stringLength-9) = '\0';
 	yylval.location = newString;
@@ -287,7 +287,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "SIZE");
 	int stringLength = strlen(yytext);
 	char * newString = (char*) malloc(sizeof(char)*(stringLength-5));
-	cout << stringLength << endl;
+	//cout << stringLength << endl;
 	strncpy(newString,yytext+5,stringLength-6);
 	*(newString+stringLength-5) = '\0';
 	yylval.sizeparams = newString;
@@ -298,7 +298,7 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s ", "BOUNDRECT");
 	int stringLength = strlen(yytext);
 	char * newString = (char*) malloc(sizeof(char)*(stringLength-10));
-	cout << stringLength << endl;
+	//cout << stringLength << endl;
 	strncpy(newString,yytext+10,stringLength-11);
 	*(newString+stringLength-10) = '\0';
 	yylval.boundrectparams = newString;
@@ -323,10 +323,10 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("RECT ");
 	int strleng = strlen(yytext);
 	char *returnedString = (char*) malloc(sizeof(char)*(strleng-5));
-	cout << strleng << endl;
+	//cout << strleng << endl;
 	strncpy(returnedString, yytext+5, strleng-6);
 	*(returnedString + strleng-5) = '\0';
-	cout << returnedString << endl;
+	//cout << returnedString << endl;
 	yylval.rectparams = returnedString;
 	return RECTANGLE;
 }
@@ -361,10 +361,10 @@ colorconstructor Color\.rgb\(({int}|{id}){comma}({int}|{id}){comma}({int}|{id})\
 	printf("%s", "STRING");
 	int strleng = strlen(yytext);
 	char *returnedString = (char*) malloc(sizeof(char)*(strleng-1));
-	cout << strleng << endl;
+	//cout << strleng << endl;
 	strncpy(returnedString, yytext+1, strleng-2);
 	*(returnedString + strleng-1) = '\0';
-	cout << "RETURNED STRING" << returnedString << endl;
+	//cout << "RETURNED STRING" << returnedString << endl;
 	yylval.strcontents = returnedString;
 	return STRING;
 }
